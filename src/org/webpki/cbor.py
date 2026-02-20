@@ -889,7 +889,8 @@ class CBOR:
                     # Note: clone() because we have mot read it really.
                     self._epoch_time = object.clone().get_epoch_time()
                 case CBOR.Tag.TAG_COTX:
-                    if not isinstance(object, CBOR.Array) or object.length != 2:
+                    if not isinstance(
+                        object, CBOR.Array) or object.length != 2:
                         self._error_in_object(CBOR.Tag.__ERR_COTX)
                     self._cotx_id = object.get(0).get_string()
                     self._cotx_object = object.get(1)
@@ -1538,7 +1539,8 @@ class CBOR:
             token = ''
             self.index -= 1
             prefix = None
-            if self.read_char() == '0' and self.next_char() in ['b' , 'o' , 'x']:
+            if (self.read_char() == '0' and 
+                self.next_char() in ['b' , 'o' , 'x']):
                 prefix = '0' + self.read_char()
             if prefix is None:
                 self.index -= 1
