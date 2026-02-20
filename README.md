@@ -1,13 +1,13 @@
-<a id="cborjs"></a><br>![CBOR is great](https://cyberphone.github.io/CBOR.js/doc/cbor.js.svg)
+<a id="cborpy"></a><br>![CBOR is great](https://cyberphone.github.io/CBOR.py/doc/cbor.py.svg)
 
 This repository contains a
-[CBOR JavaScript API](https://cyberphone.github.io/CBOR.js/doc/)
+[Python API for CBOR](https://cyberphone.github.io/CBOR.py/doc/)
 and an associated _reference implementation_.
 The API loosely mimics the JavaScript "JSON" object by _exposing a single global object_,
 unsurprisingly named "CBOR".  To shield application developers 
 from low-level details like CBOR serialization, the API provides a set of high-level
-[Wrapper&nbsp;Objects](https://cyberphone.github.io/CBOR.js/doc/#main.wrappers)
-that serve as a "bridge" between CBOR and JavaScript.
+[Wrapper&nbsp;Objects](https://cyberphone.github.io/CBOR.py/doc/#main.wrappers)
+that serve as a "bridge" between CBOR and Python.
 
 The wrapper objects are used for _encoding_ CBOR objects,
 as well as being the result of CBOR _decoding_. The wrapper concept also enables
@@ -20,7 +20,7 @@ The described API builds on the
 cross-platform profile.
 
 Due to a desire maintaining interoperability between different platforms,
-the API "by design" does not address JavaScript specific
+the API "by design" does not address Python specific
 types like binary data beyond `Uint8Array`.
 See also [CBOR&nbsp;Everywhere](https://github.com/cyberphone/cbor-everywhere/).
 
@@ -32,12 +32,12 @@ See also [CBOR&nbsp;Everywhere](https://github.com/cyberphone/cbor-everywhere/).
 
 ### Encoding Example
 
-```javascript
-let cbor = CBOR.Map()
-               .set(CBOR.Int(1), CBOR.Float(45.7))
-               .set(CBOR.Int(2), CBOR.String("Hi there!")).encode();
+```python
+cbor = CBOR.Map()
+           .set(CBOR.Int(1), CBOR.Float(45.7))
+           .set(CBOR.Int(2), CBOR.String("Hi there!")).encode()
 
-console.log(CBOR.toHex(cbor));
+print(cbor.hex())
 ------------------------------
 a201fb4046d9999999999a0269486920746865726521
 ```
@@ -47,16 +47,16 @@ and [CBOR.Array](https://cyberphone.github.io/CBOR.js/doc/#wrapper.cbor.array) o
 
 ### Decoding Example
 
-```javascript
-let map = CBOR.decode(cbor);
-console.log(map.toString());  // Diagnostic notation
+```python
+map = CBOR.decode(cbor)
+print(map.to_string())  # Diagnostic notation
 ----------------------------------------------------
 {
   1: 45.7,
   2: "Hi there!"
 }
 
-console.log('Value=' + map.get(CBOR.Int(1)).getFloat64());
+print('Value=' + map.get(CBOR.Int(1)).get_float64())
 ----------------------------------------------------------
 Value=45.7
 ```
@@ -87,14 +87,14 @@ To simplify _logging_, _documentation_, and _debugging_, CBOR.js includes suppor
 
 However, diagnostic notation can also be used as _input_ for creating CBOR based _test data_ and
 _configuration files_ from text:
-```javascript
-let cbor = CBOR.fromDiagnostic(`{
+```python
+cbor = CBOR.from_diagnostic("""{
 # Comments are also permitted
   1: 45.7,
   2: "Hi there!"
-}`).encode();
+}""").encode()
 
-console.log(CBOR.toHex(cbor));
+print(cbor.hex())
 ------------------------------
 a201fb4046d9999999999a0269486920746865726521
 ```
@@ -109,6 +109,7 @@ while remaining faithful to the native CBOR representation.
 |Android/Java|https://github.com/cyberphone/android-cbor|
 
 Updated: 2025-12-18
+
 
 
 
