@@ -1240,9 +1240,7 @@ class CBOR:
                 q = 1 << (n - 24)
                 mask = 0xffffffff << ((q >> 1) * 8)
                 n = 0
-                while True:
-                    q -= 1
-                    if q < 0: break
+                while (q := q - 1) >= 0:
                     n <<= 8
                     n += self._read_byte()
                 """
@@ -1898,9 +1896,7 @@ class CBOR:
             if length == 1 and array[0] <= 23:
                 return bytearray([array[0] | tag]) # Header-only int
             modifier = 24
-            while True:
-                length >>= 1
-                if length == 0: break  
+            while length := length >> 1:
                 modifier += 1
             return bytearray([tag | modifier]) + array
         """
