@@ -25,7 +25,7 @@ The concatnation of `metadata.cbor` and `shanty-the-cat.jpg` is subsequently sto
 
 The sample code below shows how `payload.bin` could be processed by a receiver:
 ```python
-# largefile.py
+# large-payload.py
 
 from org.webpki.cbor import CBOR
 from cryptography.hazmat.primitives import hashes

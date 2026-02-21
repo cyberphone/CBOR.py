@@ -1,4 +1,4 @@
-# largefile.py
+# large-payload.py
 
 from org.webpki.cbor import CBOR
 from cryptography.hazmat.primitives import hashes
