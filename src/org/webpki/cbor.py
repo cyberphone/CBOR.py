@@ -786,7 +786,10 @@ class CBOR:
             entry = self._lookup(key, False)
             # Note: if default_object calls __len__
             if default_object is not None: CBOR._cbor_argument_check(default_object)
-            return entry._object if entry else default_object
+            if entry:
+                self._read_flag = True
+                return entry._object
+            return default_object
 
         def get_keys(self):
             keys = list()
@@ -1189,8 +1192,8 @@ class CBOR:
                     if (self._strict_numbers and 
                         (len(byte_array) <= 8 or not byte_array[0])):
                         CBOR._error(
-                            "Non-deterministically encoded \"bigint\" ()" +
-                            "tag={:02x}, argument={:s})".format(
+                            "Non-deterministically encoded \"bigint\" " +
+                            "(tag={:02x}, argument={:s})".format(
                                 tag, byte_array.hex()))
                     value = CBOR._bytes_to_uint(byte_array)
                     return CBOR.Int(value if tag == CBOR._TAG_BIG_UNSIGNED
