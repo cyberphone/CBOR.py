@@ -1,3 +1,7 @@
+<a id="cborpy"></a>
+&nbsp;
+&nbsp;
+
 <picture id="cborpy">
   <source media="(prefers-color-scheme: dark)" srcset="doc/cbor.py.dark.svg">
   <img alt="Text changing depending on mode. Light: 'So light!' Dark: 'So dark!'" src="doc/cbor.py.svg">
@@ -113,6 +117,7 @@ while remaining faithful to the native CBOR representation.
 |JavaScript|https://github.com/cyberphone/CBOR.js#cborjs|
 
 Updated: 2026-02-20
+
 
 
 
