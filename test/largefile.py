@@ -31,17 +31,14 @@ print("CBOR bytes: " + str(decoder.get_byte_count()))
 # The rest of the stream is supposed to contain the file.
 # Read data in moderately-sized chunks until EOF.
 total_bytes = 0
-while True:
-    chunk = response.read(CHUNK_SIZE)
-    if chunk:
-        # Hash the chunk.
-        digest.update(chunk)
-        # Update counter.
-        total_bytes += len(chunk)
-        ###################################################
-        # Store the chunk in an application-specific way. #
-        ###################################################
-    else: break
+while chunk := response.read(CHUNK_SIZE):
+    # Hash the chunk.
+    digest.update(chunk)
+    # Update counter.
+    total_bytes += len(chunk)
+    ###################################################
+    # Store the chunk in an application-specific way. #
+    ###################################################
 
 # Now verify that the calculated hash is identical to the declared hash.
 if digest.finalize() != metadata.get(SHA256_LABEL).get_bytes():
