@@ -9,7 +9,7 @@
 This repository contains a
 [Python API for CBOR](https://cyberphone.github.io/CBOR.py/doc/)
 and an associated _reference implementation_.
-The API loosely mimics the JavaScript "JSON" object by _exposing a single global object_,
+The API exposes a _single global object_,
 unsurprisingly named "CBOR".  To shield application developers 
 from low-level details like CBOR serialization, the API provides a set of high-level
 [Wrapper&nbsp;Objects](https://cyberphone.github.io/CBOR.py/doc/#main.wrappers)
@@ -26,14 +26,14 @@ The described API builds on the
 cross-platform profile.
 
 Due to a desire maintaining interoperability between different platforms,
-the API "by design" does not address Python specific
-types like binary data beyond `Uint8Array`.
-See also [CBOR&nbsp;Everywhere](https://github.com/cyberphone/cbor-everywhere/).
+the API "by design" does not address Python specific features.
+
+See also [CBOR&nbsp;Everywhere](https://github.com/cyberphone/cbor-everywher.
 
 ### "CBOR" Components
 - Self-encoding wrapper objects
 - Decoder
-- Diagnostic Notation decoder
+- Diagnostic Notation encoder/decoder
 - Utility methods
 
 ### Encoding Example
@@ -48,15 +48,15 @@ print(cbor.hex())
 a201fb4046d9999999999a0269486920746865726521
 ```
 Note: there are no requirements "chaining" objects as shown above; items
-may be added to [CBOR.Map](https://cyberphone.github.io/CBOR.js/doc/#wrapper.cbor.map)
-and [CBOR.Array](https://cyberphone.github.io/CBOR.js/doc/#wrapper.cbor.array) objects in separate steps.
+may be added to [CBOR.Map](https://cyberphone.github.io/CBOR.py/doc/#wrapper.cbor.map)
+and [CBOR.Array](https://cyberphone.github.io/CBOR.py/doc/#wrapper.cbor.array) objects in separate steps.
 
 ### Decoding Example
 
 ```python
 map = CBOR.decode(cbor)
-print(map.to_string())  # Diagnostic notation
----------------------------------------------
+print(map)  # Diagnostic notation
+---------------------------------
 {
   1: 45.7,
   2: "Hi there!"
@@ -69,17 +69,17 @@ Value=45.7
 
 ### On-line Testing
 
-On https://cyberphone.github.io/CBOR.js/doc/playground.html you will find a simple Web application,
-permitting testing the encoder, decoder, and diagnostic notation implementation.
+On https://cyberphone.github.io/CBOR.py/doc/playground.html you will find a simple Web application,
+permitting testing a compatible encoder, decoder, and diagnostic notation implementation.
 
-### NPM Version
+### PyPI Version
 
-For usage with Node.js and Deno, an NPM version is available at https://npmjs.com/package/cbor-core 
+TBD
 
 ### Deterministic Encoding
 
 For maintaining cross-platform interoperability, CBOR.js implements
-[Deterministic&nbsp;Encoding](https://cyberphone.github.io/CBOR.js/doc/index.html#main.deterministic).
+[Deterministic&nbsp;Encoding](https://cyberphone.github.io/CBOR.py/doc/index.html#main.deterministic).
 
 To shield developers from having to know the inner workings of deterministic encoding, CBOR.js performs
 all necessary transformations _automatically_.  This for example means that if the 
@@ -88,8 +88,8 @@ in the [Encoding&nbsp;Example](#encoding-example) were swapped, the generated CB
 
 ### Diagnostic Notation Support
 
-To simplify _logging_, _documentation_, and _debugging_, CBOR.js includes support for
-[Diagnostic&nbsp;Notation](https://cyberphone.github.io/CBOR.js/doc/index.html#main.diagnostic).
+To simplify _logging_, _documentation_, and _debugging_, CBOR.py includes support for
+[Diagnostic&nbsp;Notation](https://cyberphone.github.io/CBOR.py/doc/index.html#main.diagnostic).
 
 However, diagnostic notation can also be used as _input_ for creating CBOR based _test data_ and
 _configuration files_ from text:
@@ -116,6 +116,7 @@ while remaining faithful to the native CBOR representation.
 |JavaScript|https://github.com/cyberphone/CBOR.js#cborjs|
 
 Updated: 2026-02-20
+
 
 
 
