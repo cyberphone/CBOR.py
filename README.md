@@ -28,7 +28,7 @@ cross-platform profile.
 Due to a desire maintaining interoperability between different platforms,
 the API "by design" does not address Python specific features.
 
-See also [CBOR&nbsp;Everywhere](https://github.com/cyberphone/cbor-everywher.
+See also [CBOR&nbsp;Everywhere](https://github.com/cyberphone/cbor-everywhere).
 
 ### "CBOR" Components
 - Self-encoding wrapper objects
@@ -116,6 +116,7 @@ while remaining faithful to the native CBOR representation.
 |JavaScript|https://github.com/cyberphone/CBOR.js#cborjs|
 
 Updated: 2026-02-20
+
 
 
 
