@@ -68,9 +68,9 @@ public class CreateDocument {
       <div style='margin-top:0.5em'>
       Unlike <a href='#wrapper.cbor.float'>CBOR.Float()</a>,
       this method also supports one of
-      the non-finite values, <kbd>Number.NaN</kbd>,
-      <kbd>Number.POSITIVE_INFINITY</kbd>,
-      and <kbd>Number.NEGATIVE_INFINITY</kbd>.</div>
+      the non-finite values, <kbd>math.nan</kbd>,
+      <kbd>math.inf</kbd>,
+      and <kbd>-math.inf</kbd>.</div>
       <div style='margin-top:0.5em'>
       See also <a href='non-finite-numbers.html'>Non-Finite Numbers</a>.</div>""";
 
@@ -134,9 +134,9 @@ public class CreateDocument {
       <div style='margin-top:0.5em'>
       Note that this method makes it transparent for applications if the returned
       value is a "regular" <code>float</code>, or one of
-      the non-finite values, <kbd>Number.NaN</kbd>,
-      <kbd>Number.POSITIVE_INFINITY</kbd>,
-      or <kbd>Number.NEGATIVE_INFINITY</kbd>.</div>""";
+      the non-finite values, <kbd>math.nan</kbd>,
+      <kbd>math.inf</kbd>,
+      or <kbd>-math.inf</kbd>.</div>""";
 
   static final String W_GETEXTFLOAT_RETURN_DESCR = """
       Decoded floating-point number.""";
@@ -188,9 +188,9 @@ public class CreateDocument {
       Check if non-finite object is simple.
       <div style='margin-top:0.5em'>
       This method returns <code>true</code> if the non-finite object is a 
-      <kbd>Number.NaN</kbd>,
-      <kbd>Number.POSITIVE_INFINITY</kbd>, or 
-      <kbd>Number.NEGATIVE_INFINITY</kbd>,
+      <kbd>math.nan</kbd>,
+      <kbd>math.inf</kbd>, or 
+      <kbd>-math.inf</kbd>,
       else <code>false</code> is returned.</div>""";
 
   static final String W_ISSIMPLE_NONFIN_RETURN_DESCR = "Result.";
@@ -435,7 +435,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Consult test file <code>dynamic.js</code> for examples.</div>""";
 
   static final String W_MAP_SET_DYN_PARAMETER_DESCR = """
-      Function or =&gt; operator with one parameter holding <kbd>this</kbd>.""";
+      Function or =&gt; operator with one parameter holding <kbd>self</kbd>.""";
 
   static final String W_MAP_MERGE_DESCR = """
       Merge maps.
@@ -581,7 +581,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   // encode()
 
   static final String ENCODE_DESCR = """
-      Encode (aka &quot;serialize&quot;) <kbd>this</kbd> object.
+      Encode (aka &quot;serialize&quot;) <kbd>self</kbd>.
       <div style='margin-top:0.5em'>Note: this method always return CBOR data using
       <a href='#main.deterministic'>Deterministic&nbsp;Encoding</a>.</div>
       <div style='margin-top:0.5em'>
@@ -593,16 +593,16 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   // clone()
 
   static final String CLONE_DESCR = """
-      Create a new instance of <kbd>this</kbd> object, initialized
+      Create a new instance of <kbd>self</kbd>, initialized
       with the original CBOR content.""";
 
   static final String CLONE_RETURN_DESCR = """
-      Deep copy of <kbd>this</kbd> object.""";
+      Deep copy of <kbd>self</kbd>.""";
 
   // equals()
 
   static final String EQUALS_DESCR = 
-      "Compare <kbd>this</kbd> object with another CBOR object." +
+      "Compare <kbd>self</kbd> with another CBOR object." +
       "<div style='margin-top:0.5em'>" +
       "The result is <code>true</code> if and only if <kbd>object</kbd> is not " +
       "<code>null</code> and is a <kbd>" +
@@ -613,7 +613,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Argument to compare with.""";
 
   static final String EQUALS_RETURN_DESCR = """
-      Returns <code>true</code> if <kbd>this</kbd> object is equal to <kbd><i>object</i></kbd>,
+      Returns <code>true</code> if <kbd>self</kbd> is equal to <kbd><i>object</i></kbd>,
       else <code>false</code> is returned.""";
 
   // is_null()
@@ -621,18 +621,18 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   static final String ISNULL_DESCR = """
       Check for CBOR <code>null</code>.
       <div style='margin:0.5em 0'>Note: if <a href='#common.checkforunread'>check_for_unread()</a>
-      is used, <kbd>this</kbd> object will only be regarded as &quot;read&quot;
+      is used, <kbd>self</kbd> will only be regarded as &quot;read&quot;
       if it actually is a CBOR <code>null</code> item.</div>
       See also <a href='#wrapper.cbor.null'>CBOR.Null()</a>.""";
 
   static final String ISNULL_RETURN_DESCR = """
-      Returns <code>true</code> if <kbd>this</kbd> object
+      Returns <code>true</code> if <kbd>self</kbd>
       holds a CBOR <code>null</code> item, else <code>false</code> is returned.""";
 
   // scan()
 
   static final String SCAN_DESCR = """
-      Scan <kbd>this</kbd> object as well as possible child objects
+      Scan <kbd>self</kbd> as well as possible child objects
       in order to make them appear as &quot;read&quot;.
       This is only meaningful in conjunction with
       <a href='#common.checkforunread'>check_for_unread()</a>.""";
@@ -640,7 +640,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   // check_for_unread()
 
   static final String CHECK4_DESCR = """
-       Check if <kbd>this</kbd> object including possible child objects has been read
+       Check if <kbd>self</kbd> including possible child objects has been read
        (like calling <a href='#cbor.int.getint32'>get_int32()</a>).
        If not <i>all</i> of the associated objects have been read, a <a href='#main.errors'>CBOR.Exception</a> is thrown.
        <div style='margin:0.5em 0'>
@@ -664,12 +664,12 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   // to_diagnostic()
 
   static final String TODIAG_DESCR = """
-      Render <kbd>this</kbd> object in <a href='#main.diagnostic'>Diagnostic Notation</a>.
+      Render <kbd>self</kbd> in <a href='#main.diagnostic'>Diagnostic Notation</a>.
       In similarity to <a href='#common.encode'>encode()</a>, this method always produce
       data in <a href='#main.deterministic'>Deterministic Encoding</a>, irrespective to how
       the data was created.
       See also <a href='#common.tostring'>to_string()</a>.
-      <div style='margin-top:0.5em'>If <kbd>this</kbd> object (as well as possible
+      <div style='margin-top:0.5em'>If <kbd>self</kbd> (as well as possible
       child objects), conforms to the subset of data types supported by JSON,
       this method can also be used to generate JSON data.</div>""";
 
@@ -682,7 +682,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Textual version of the wrapped CBOR content.""";
 
   static final String TOSTRING_DESCR = """
-      Render <kbd>this</kbd> object in <a href='#main.diagnostic'>Diagnostic Notation</a>.
+      Render <kbd>self</kbd> in <a href='#main.diagnostic'>Diagnostic Notation</a>.
       Equivalent to calling <a href='#common.todiagnostic'>to_diagnostic()</a>
       with a <code>true</code> argument.""";
 
@@ -963,12 +963,12 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
 
   // Decoder.get_byte_count()
 
-  static final String GETBYTECOUNT_DESCR = """
+  static final String get_byte_count_DESCR = """
       Get decoder byte count.
       <div style='margin-top:0.5em'>
       This is equivalent to the position of the next item to be read.</div>""";
 
-  static final String GETBYTECOUNT_RETURN_DESCR = """
+  static final String get_byte_count_RETURN_DESCR = """
       The number of bytes read so far.""";
 
   // CBOR.from_diagnostic()
@@ -1232,6 +1232,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
     if (link.lastIndexOf(prefix.toLowerCase()) > 0 && prefix.startsWith("CBOR.")) {
         link = link.substring(prefix.length() + 1);
     }
+    link = link.replace("_","");
     s.append(printSubHeader(link, method.name +(method instanceof Wrapper ? "" : "()")));
     beginTable();
     rowBegin();
@@ -1363,7 +1364,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   }
 
   void printProperty(String prefix, Property property) {
-    s.append(printSubHeader((prefix + "." + property.name).toLowerCase(), property.name));
+    s.append(printSubHeader((prefix + "." + property.name
+        .replace("_","")).toLowerCase(), property.name));
     beginTable();
     rowBegin();
     tableHeader("Name");
@@ -2101,8 +2103,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
 
     // Decoder.get_byte_count()
 
-    addDecoderMethod("<i>Decoder</i>.get_byte_count", GETBYTECOUNT_DESCR)
-        .setReturn(DataTypes.JS_INT, GETBYTECOUNT_RETURN_DESCR);
+    addDecoderMethod("<i>Decoder</i>.get_byte_count", get_byte_count_DESCR)
+        .setReturn(DataTypes.JS_INT, get_byte_count_RETURN_DESCR);
 
     // CBOR.from_diagnostic()
 
