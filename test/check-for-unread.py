@@ -25,7 +25,7 @@ def oneTurn(statement, access, message=None):
             # print(statement + " " + error)
             assert_true(statement, should_fail)
             check_exception(e, "never read")
-    if message is not None and (error.find(message) < 0):
+    if should_fail and (error.find(message) < 0):
         fail("not" + repr(message) + error)
 
 MAP_KEY_1 = CBOR.Int(1)
