@@ -103,4 +103,10 @@ assert_true("integer problems", res.get(MAP_KEY_2).get(0).get_int64() == 700)
 assert_true("String problems", res.get(MAP_KEY_1).get_string() == "Hi!")
 res.check_for_unread() # all is good
 
+MAP_KEY_3 = CBOR.Array().add(CBOR.Int(5)).add(CBOR.Map())
+oneTurn("CBOR.Map().set(MAP_KEY_3, CBOR.String('Hi!'))", None,
+    "Map key [5,{}] with argument String with value=\"Hi!\" was never read")
+
+oneTurn("CBOR.Map().set(MAP_KEY_3, CBOR.String('Hi!'))", "get(MAP_KEY_3).get_string()")
+
 success()

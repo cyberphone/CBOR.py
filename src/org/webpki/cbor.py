@@ -222,11 +222,11 @@ class CBOR:
         def check_for_unread(self):
             # Top-level Array, Map, and Tag container object marked as read.
             self._mark_as_read(self)
-            self._traverse(None, True)
+            self._traverse(None, None, True)
             return self
 
         def scan(self):
-            self._traverse(None, False)
+            self._traverse(None, None, False)
             return self
 
         def _mark_as_read(self, object):
@@ -237,16 +237,16 @@ class CBOR:
         def _is_primitive(self):
             return True # Overridden by Array, Map, and Tag
 
-        def _traverse(self, holding_object, check):
+        def _traverse(self, holding_object, map_key, check):
             match type(self).__name__:
                 case "Map":
                     for entry in self._entries:
-                        entry._object._traverse(entry._key, check)
+                        entry._object._traverse(self, entry._key, check)
                 case "Array":
                     for object in self._objects:
-                        object._traverse(self, check)
+                        object._traverse(self, None, check)
                 case "Tag":
-                    self._object._traverse(self, check)
+                    self._object._traverse(self, None, check)
             if check:
                 if not self._read_flag:
                     problem_item = type(self).__name__
@@ -262,7 +262,7 @@ class CBOR:
                                 holding_object.get_tag_number())
                         else:
                             holder = "Map key {} with argument".format(
-                                holding_object)
+                                map_key.to_diagnostic(False))
                         problem_item = holder + " " + problem_item
                     CBOR._error(problem_item)
             else:
