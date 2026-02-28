@@ -4,6 +4,7 @@ from org.webpki.cbor import CBOR
 ###############################
 #          Encoding           #
 ###############################
+
 cbor = CBOR.Map()\
            .set(CBOR.Int(1), CBOR.Float(45.7))\
            .set(CBOR.Int(2), CBOR.String("Hi there!")).encode()

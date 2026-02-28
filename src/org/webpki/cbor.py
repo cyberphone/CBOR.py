@@ -220,42 +220,54 @@ class CBOR:
             return self._internal_encode()
         
         def check_for_unread(self):
+            # Top-level Array, Map, and Tag container object marked as read.
+            self._mark_as_read(self)
             self._traverse(None, True)
+            return self
 
         def scan(self):
             self._traverse(None, False)
             return self
 
-        def _traverse(self, holder_object, check):
+        def _mark_as_read(self, object):
+            if not object._is_primitive():
+                object._read_flag = True
+            return object
+        
+        def _is_primitive(self):
+            return True # Overridden by Array, Map, and Tag
+
+        def _traverse(self, holding_object, check):
             match type(self).__name__:
                 case "Map":
                     for entry in self._entries:
-                        self.get(entry._key)._traverse(entry._key, check)
-
+                        entry._object._traverse(entry._key, check)
                 case "Array":
                     for object in self._objects:
                         object._traverse(self, check)
-                
                 case "Tag":
-                    self.get()._traverse(self, check)
-
+                    self._object._traverse(self, check)
             if check:
                 if not self._read_flag:
-                    CBOR._error(("Data" if holder_object is None else 
-                        "Array element" if isinstance(holder_object, 
-                                                      CBOR.Array) else
-                        "Tagged object " + 
-                            str(holder_object.get_tag_number()) 
-                        if isinstance(holder_object,CBOR.Tag) else 
-                        "Map key " +
-                            holder_object.to_diagnostic(False) + 
-                            " with argument") +                    
-                        " of type=CBOR." + type(self).__name__ + 
-                        " with value=" + 
-                            self.to_diagnostic(False) + " was never read")
-
+                    problem_item = type(self).__name__
+                    if self._is_primitive():
+                        problem_item += " with value={}".format(
+                            self.to_diagnostic(False))
+                    problem_item += " was never read"
+                    if holding_object is not None:
+                        if isinstance(holding_object, CBOR.Array):
+                            holder = "Array element of type"
+                        elif isinstance(holding_object, CBOR.Tag):
+                            holder = "Tagged object {} of type".format(
+                                holding_object.get_tag_number())
+                        else:
+                            holder = "Map key {} with argument".format(
+                                holding_object)
+                        problem_item = holder + " " + problem_item
+                    CBOR._error(problem_item)
             else:
                 self._read_flag = True
+
   
         def get(self):
             CBOR._error('get() not available in: CBOR.' + type(self).__name__)
@@ -612,9 +624,8 @@ class CBOR:
             return self
         
         def get(self, index):
-            self._read_flag = True
-            return self._objects[self._index_check(
-                index, len(self._objects) - 1)]
+            return self._mark_as_read(self._objects[self._index_check(
+                index, len(self._objects) - 1)])
         
         def insert(self, index, object):
             self._immutable_test()
@@ -681,6 +692,9 @@ class CBOR:
         
         def _length(self):
             return len(self._objects)
+        
+        def _is_primitive(self):
+            return False
  
     ##########################
     #        CBOR.Map        #
@@ -779,8 +793,7 @@ class CBOR:
             return self
 
         def get(self, key):
-            self._read_flag = True
-            return self._lookup(key, True)._object
+            return self._mark_as_read(self._lookup(key, True)._object)
    
         def get_conditionally(self, key, default_object=None):
             entry = self._lookup(key, False)
@@ -841,6 +854,9 @@ class CBOR:
         def _length(self):
             return len(self._entries)
 
+        def _is_primitive(self):
+            return False
+
     """ Support class to CBOR.Map. """    
     class _Entry:
         def __init__(self, key, object):
@@ -892,11 +908,13 @@ class CBOR:
                     # Note: clone() because we have mot read it really.
                     self._epoch_time = object.clone().get_epoch_time()
                 case CBOR.Tag.TAG_COTX:
-                    if not isinstance(
-                        object, CBOR.Array) or object.length != 2:
-                        self._error_in_object(CBOR.Tag.__ERR_COTX)
-                    self._cotx_id = object.get(0).get_string()
-                    self._cotx_object = object.get(1)
+                    if isinstance(object, CBOR.Array) and object.length == 2:
+                        array = object._objects
+                        self._cotx_id = array[0]
+                        if isinstance(self._cotx_id, CBOR.String):
+                            self._cotx_object = array[1]
+                            return
+                    self._error_in_object(CBOR.Tag.__ERR_COTX)
 
         def get_date_time(self):
             if self._date_time is None:
@@ -929,26 +947,29 @@ class CBOR:
                 cbor_printer.append(']')
             cbor_printer.append(')')
 
+        def _is_primitive(self):
+            return False
+
         def get_tag_number(self):
             return self._tag_number
     
         def get(self):
-            self._read_flag = True
-            return self._object
+            return self._mark_as_read(self._object)
 
         def _check_cotx(self):
             if self._cotx_object is None:
                 self._error_in_object(CBOR.Tag.__ERR_COTX)
+            self.get()
 
         @property
         def cotx_id(self):
             self._check_cotx()
-            return self._cotx_id
+            return self._cotx_id.get_string()
 
         @property
         def cotx_object(self):
             self._check_cotx()
-            return self._cotx_object
+            return self._mark_as_read(self._cotx_object)
 
     ##########################
     #      CBOR.Simple       #
