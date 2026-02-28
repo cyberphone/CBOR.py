@@ -259,7 +259,7 @@ class CBOR:
                             holder = "Array element of type"
                         elif isinstance(holding_object, CBOR.Tag):
                             holder = "Tagged object {} of type".format(
-                                holding_object.get_tag_number())
+                                holding_object._tag_number)
                         else:
                             holder = "Map key {} with argument".format(
                                 map_key.to_diagnostic(False))
