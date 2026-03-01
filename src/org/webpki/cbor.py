@@ -793,7 +793,7 @@ class CBOR:
         def get(self, key):
             return self._mark_as_read(self._lookup(key, True)._object)
    
-        def get_conditionally(self, key, default_object=None):
+        def get_conditionally(self, key, default_object):
             entry = self._lookup(key, False)
             # Note: if default_object calls __len__
             if default_object is not None: CBOR._cbor_argument_check(default_object)
