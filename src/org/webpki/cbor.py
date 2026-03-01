@@ -555,7 +555,7 @@ class CBOR:
                             cbor_printer.append("u00{:02x}".format(c))
                         else:
                             cbor_printer.append(chr(escaped_character))
-                        continue;
+                        continue
                 cbor_printer.append(chr(c))
             cbor_printer.append('"')
     
@@ -670,16 +670,16 @@ class CBOR:
                 CBOR._generic_header(CBOR._MT_ARRAY, len(self._objects)))
         
         def _internal_to_string(self, cbor_printer):
-            if cbor_printer.arrayFolding(self):
-                cbor_printer.beginList('[')
+            if cbor_printer.array_folding(self):
+                cbor_printer.begin_list('[')
                 not_first = False
                 for object in self._objects:
                     if not_first:
                         cbor_printer.append(',')
                     not_first = True
-                    cbor_printer.newlineAndIndent()
+                    cbor_printer.newline_and_indent()
                     object._internal_to_string(cbor_printer)
-                cbor_printer.endList(not_first, ']')
+                cbor_printer.end_list(not_first, ']')
             else:
                 cbor_printer.append('[')
                 not_first = False
@@ -798,8 +798,7 @@ class CBOR:
             # Note: if default_object calls __len__
             if default_object is not None: CBOR._cbor_argument_check(default_object)
             if entry:
-                self._read_flag = True
-                return entry._object
+                return self._mark_as_read(entry._object)
             return default_object
 
         def get_keys(self):
@@ -825,16 +824,16 @@ class CBOR:
 
         def _internal_to_string(self, cbor_printer):
             not_first = False
-            cbor_printer.beginList("{")
+            cbor_printer.begin_list("{")
             for entry in self._entries:
                 if not_first:
                     cbor_printer.append(",")
                 not_first = True
-                cbor_printer.newlineAndIndent()
+                cbor_printer.newline_and_indent()
                 entry._key._internal_to_string(cbor_printer)
                 cbor_printer.append(":").space()
                 entry._object._internal_to_string(cbor_printer)
-            cbor_printer.endList(not_first, "}")
+            cbor_printer.end_list(not_first, "}")
 
         def set_sorting_mode(self, pre_sorted_keys):
             self._pre_sorted_keys = pre_sorted_keys
@@ -1206,7 +1205,6 @@ class CBOR:
             """
             match tag:
                 case CBOR._TAG_BIG_NEGATIVE | CBOR._TAG_BIG_UNSIGNED:
-                    position = self._byte_count
                     byte_array = self._get_object().get_bytes()
                     if (self._strict_numbers and 
                         (len(byte_array) <= 8 or not byte_array[0])):
@@ -1266,9 +1264,9 @@ class CBOR:
 
                 case CBOR._MT_TAG:
                     self._enter_level()
-                    cborTag = CBOR.Tag(n, self._get_object())
+                    ccbor_tag = CBOR.Tag(n, self._get_object())
                     self._nesting_level -= 1
-                    return cborTag
+                    return ccbor_tag
 
                 case CBOR._MT_UNSIGNED:
                     return CBOR.Int(n)
@@ -1284,22 +1282,22 @@ class CBOR:
 
                 case CBOR._MT_ARRAY:
                     self._enter_level()
-                    cborArray = CBOR.Array()
+                    cbor_array = CBOR.Array()
                     for q in range(n):
-                        cborArray.add(self._get_object())
+                        cbor_array.add(self._get_object())
                     self._nesting_level -= 1
-                    return cborArray
+                    return cbor_array
 
                 case CBOR._MT_MAP:
                     self._enter_level()
-                    cborMap = CBOR.Map().set_sorting_mode(self._strict_maps)
+                    cbor_map = CBOR.Map().set_sorting_mode(self._strict_maps)
                     for q in range(n):
-                        cborMap.set(self._get_object(), self._get_object())
+                        cbor_map.set(self._get_object(), self._get_object())
                     self._nesting_level -= 1
                     """ 
                     Programmatically added elements sort automatically. 
                     """
-                    return cborMap.set_sorting_mode(False)
+                    return cbor_map.set_sorting_mode(False)
 
                 case _:
                     self._unsupported_tag(tag)
@@ -1339,8 +1337,6 @@ class CBOR:
         class ParserError(Exception):
             def __init__(self, msg):
                 super().__init__(msg)
- #               self.__suppress_context__ = True
- #               sys.tracebacklimit = 0
     
         def build_error(self, error):
             pass
@@ -1613,7 +1609,7 @@ class CBOR:
             return c
 
         def to_readable_char(self, c):
-            char_code = ord(c[0]);
+            char_code = ord(c[0])
             return ("\\u00{:2x}".format(char_code) 
                     if char_code < 0x20 else ("'" + c + "'"))
 
@@ -1837,7 +1833,7 @@ class CBOR:
             self.start_of_line = 0
             self.buffer = ''
 
-        def beginList(self, endChar):
+        def begin_list(self, endChar):
             self.indentation_level += 1
             self.buffer += endChar
 
@@ -1849,16 +1845,16 @@ class CBOR:
             if self.pretty_print:
                 self.buffer += ' '
 
-        def arrayFolding(self, array):
+        def array_folding(self, array):
             if self.pretty_print:
                 if array.length == 0:
                     return False
-                arraysInArrays = True
+                arrays_in_arrays = True
                 for q in range(array.length):
                     if not isinstance(array.get(q), CBOR.Array):
-                        arraysInArrays = False
+                        arrays_in_arrays = False
                         break
-                if arraysInArrays:
+                if arrays_in_arrays:
                     return True
                 """ Where we are standing at the moment. """
                 if (len(self.buffer) - self.start_of_line +
@@ -1868,17 +1864,17 @@ class CBOR:
                     return True
             return False
 
-        def newlineAndIndent(self):
+        def newline_and_indent(self):
             if self.pretty_print:
                 self.start_of_line = len(self.buffer)
                 self.buffer += '\n'
                 for i in range (self.indentation_level):
                     self.buffer += '  '
 
-        def endList(self, notEmpty, endChar):
+        def end_list(self, not_empty, endChar):
             self.indentation_level -= 1
-            if notEmpty:
-                self.newlineAndIndent()
+            if not_empty:
+                self.newline_and_indent()
             self.buffer += endChar
 
     class Exception(Exception):
@@ -1960,8 +1956,8 @@ class CBOR:
         return value
 
     @staticmethod
-    def _range_error(type, valueString):
-        CBOR._error('Value out of range for "' + type + '": ' + valueString)
+    def _range_error(type, value_string):
+        CBOR._error('Value out of range for "' + type + '": ' + value_string)
 
     @staticmethod
     def _check_argument_type(value, expected):
