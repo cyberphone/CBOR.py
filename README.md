@@ -39,8 +39,8 @@ See also [CBOR&nbsp;Everywhere](https://github.com/cyberphone/cbor-everywhere).
 ### Encoding Example
 
 ```python
-cbor = CBOR.Map()\
-           .set(CBOR.Int(1), CBOR.Float(45.7))\
+cbor = CBOR.Map() \
+           .set(CBOR.Int(1), CBOR.Float(45.7)) \
            .set(CBOR.Int(2), CBOR.String("Hi there!")).encode()
 
 print(cbor.hex())
@@ -115,7 +115,8 @@ while remaining faithful to the native CBOR representation.
 |Android/Java|https://github.com/cyberphone/android-cbor|
 |JavaScript|https://github.com/cyberphone/CBOR.js#cborjs|
 
-Updated: 2026-02-20
+Updated: 2026-03-01
+
 
 
 
