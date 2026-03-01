@@ -179,27 +179,27 @@ public class CreateDocument {
   static final String W_ISNAN_NONFIN_DESCR = """
       Check if non-finite object is a <code>NaN</code>.
       <div style='margin-top:0.5em'>
-      This method returns <code>true</code> for <i>all conformant</i> 
-      <code>NaN</code> variants, else <code>false</code> is returned.</div>""";
+      This method returns <code>True</code> for <i>all conformant</i> 
+      <code>NaN</code> variants, else <code>False</code> is returned.</div>""";
 
   static final String W_ISNAN_NONFIN_RETURN_DESCR = "Result.";
 
   static final String W_ISSIMPLE_NONFIN_DESCR = """
       Check if non-finite object is simple.
       <div style='margin-top:0.5em'>
-      This method returns <code>true</code> if the non-finite object is a 
+      This method returns <code>True</code> if the non-finite object is a 
       <kbd>math.nan</kbd>,
       <kbd>math.inf</kbd>, or 
-      <kbd>-math.inf</kbd>,
-      else <code>false</code> is returned.</div>""";
+      <kbd>&#8209;math.inf</kbd>,
+      else <code>False</code> is returned.</div>""";
 
   static final String W_ISSIMPLE_NONFIN_RETURN_DESCR = "Result.";
 
   static final String W_GETSIGN_NONFIN_DESCR = """
       Get sign bit of non-finite object.
       <div style='margin-top:0.5em'>
-      This method returns <code>true</code> if the sign bit is <code>1</code>,
-      else <code>false</code> is returned.</div>
+      This method returns <code>True</code> if the sign bit is <code>1</code>,
+      else <code>False</code> is returned.</div>
       <div style='margin-top:0.5em'>
       See also <a href='#cbor.nonfinite.setsign'>set_sign()</a>.</div>""";
 
@@ -209,7 +209,7 @@ public class CreateDocument {
       Set sign bit of non-finite object.
       <div style='margin-top:0.5em'>
       The sign bit is expressed as a <code>boolean</code>.
-      <code>true</code> = <code>1</code>, <code>false</code> = <code>0</code>.</div>
+      <code>True</code> = <code>1</code>, <code>False</code> = <code>0</code>.</div>
       <div style='margin-top:0.5em'>
       See also <a href='#cbor.nonfinite.getsign'>get_sign()</a>.</div>""";
 
@@ -421,21 +421,26 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       <div style='margin-top:0.5em'>Note: this implementation
       presumes that <kbd>key</kbd> objects are <i>immutable</i>.
       That is, the following code will throw a <a href='#main.errors'>CBOR.Exception</a>:</div>
-      <div style='margin:0.3em 0 0 1.2em'><code>let key = CBOR.Array();<br>
-      let map = CBOR.Map().set(key, CBOR.Int(5));<br>
-      key.add(CBOR.String("data"));  // Mutating key object</code></div>
+      <div style='margin:0.3em 0 0 1.2em'><code>key = CBOR.Array();<br>
+      map = CBOR.Map().set(key, CBOR.Int(5));<br>
+      key.add(CBOR.String("data"))  # Mutating key object</code></div>
       <div style='margin-top:0.3em'>By defining <kbd>key</kbd> objects inline
       (<i>chaining</i>) or by <i>preset variable declarations</i>, <kbd>key</kbd> objects
       of <i>any</i> complexity can be used.</div>""";
 
   static final String W_MAP_SET_DYN_DESCR = """
-      Set map entries using a function or =>.
-      <div style='margin-top:0.5em'>This method permits using
-      chaining with dynamic or optional map elements.
-      Consult test file <code>dynamic.js</code> for examples.</div>""";
+      Set map entries using an external function.
+      <div style='margin-top:0.5em'>The function will be called
+      with two paramaters: map instance and <kbd>argument</kbd>.
+      The function must return the map instance.</div>
+      <div style='margin-top:0.5em'>Consult test file
+      <code>dynamic.py</code> for examples.</div>""";
 
-  static final String W_MAP_SET_DYN_PARAMETER_DESCR = """
-      Function or =&gt; operator with one parameter holding <kbd>self</kbd>.""";
+  static final String W_MAP_SET_DYN_FUNC_PARAMETER_DESCR = """
+      Parameter holding a reference (pointer) to the function.""";
+
+  static final String W_MAP_SET_DYN_ARG_PARAMETER_DESCR = """
+      Parameter holding an argument to the function.""";
 
   static final String W_MAP_MERGE_DESCR = """
       Merge maps.
@@ -449,13 +454,13 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Update map entry.""";
 
   static final String W_MAP_UPDATE_P3_DESCR = """
-      If <kbd><i>existing</i></kbd> is <code>true</code>,
+      If <kbd><i>existing</i></kbd> is <code>True</code>,
       <kbd><i>key</i></kbd> must be defined, else a <a href='#main.errors'>CBOR.Exception</a> is thrown.
-      <div style='margin-top:0.5em'>If <kbd><i>existing</i></kbd> is <code>false</code>,
+      <div style='margin-top:0.5em'>If <kbd><i>existing</i></kbd> is <code>False</code>,
       a <code>map</code> entry will be created for <kbd><i>key</i></kbd> if not already defined.</div>""";
 
   static final String W_MAP_UPDATE_RETURN_DESCR = """
-      Previous object.  May be <code>null</code>.""";
+      Previous object.  May be <code>None</code>.""";
 
   static final String W_MAP_GET_DESCR = """
       Get map entry.
@@ -477,7 +482,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   static final String W_MAP_GETCOND_P2_DESCR = """
       Object to return if <kbd><i>key</i></kbd> is undefined.
       <div style='margin-top:0.5em'>Note:
-      <kbd><i>default_object</i></kbd> may be <code>null</code>.</div>""";
+      <kbd><i>default_object</i></kbd> may be <code>None</code>.</div>""";
 
   static final String W_MAP_GETCOND_RETURN_DESCR = """
       Retrieved or default object.""";
@@ -486,7 +491,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Check map for key presence.""";
 
   static final String W_MAP_CONTAINS_RETURN_DESCR = """
-      <code>true</code> or <code>false</code>.""";
+      <code>True</code> or <code>False</code>.""";
 
   static final String W_MAP_GETKEYS_DESCR = """
       Get map keys.""";
@@ -498,14 +503,14 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       <a href='#wrapper.cbor.map'>CBOR.Map()</a> object during
       <a href='#cbor.map.set'>set()</a> operations.
       <div style='margin:0.5em 0'>Typical usage:</div>
-      <div style='margin:0.3em 0 0.3em 1.2em'><code>let map = CBOR.Map().set_sorting_mode(true)</code></div>
+      <div style='margin:0.3em 0 0.3em 1.2em'><code>map = CBOR.Map().set_sorting_mode(True)</code></div>
       This method may be called multiple times which could be
       useful if you have a moderate set of unsorted meta data keys
       combined with a sorted large table-like set of keys.
       Note that this method has no effect on decoding operations.""";
 
   static final String W_MAP_SET_SORTING_MODE_P1_DESCR = """
-      If <code>true</code>,
+      If <code>True</code>,
       keys must be provided in (CBOR wise) ascending order
       which can improve performance for maps having a huge number of keys.
       Improper key order causes a <a href='#main.errors'>CBOR.Exception</a> to be thrown.
@@ -604,8 +609,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   static final String EQUALS_DESCR = 
       "Compare <kbd>self</kbd> with another CBOR object." +
       "<div style='margin-top:0.5em'>" +
-      "The result is <code>true</code> if and only if <kbd>object</kbd> is not " +
-      "<code>null</code> and is a <kbd>" +
+      "The result is <code>True</code> if and only if <kbd>object</kbd> is not " +
+      "<code>None</code> and is a <kbd>" +
       DataTypes.CBOR_Any.toString() + "</kbd>, and the associated binary encodings " +
       "(as provided by <a href='#common.encode'>encode()</a>) are equivalent.</div>";
 
@@ -613,8 +618,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Argument to compare with.""";
 
   static final String EQUALS_RETURN_DESCR = """
-      Returns <code>true</code> if <kbd>self</kbd> is equal to <kbd><i>object</i></kbd>,
-      else <code>false</code> is returned.""";
+      Returns <code>True</code> if <kbd>self</kbd> is equal to <kbd><i>object</i></kbd>,
+      else <code>False</code> is returned.""";
 
   // is_null()
 
@@ -626,8 +631,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       See also <a href='#wrapper.cbor.null'>CBOR.Null()</a>.""";
 
   static final String ISNULL_RETURN_DESCR = """
-      Returns <code>true</code> if <kbd>self</kbd>
-      holds a CBOR <code>null</code> item, else <code>false</code> is returned.""";
+      Returns <code>True</code> if <kbd>self</kbd>
+      holds a CBOR <code>null</code> item, else <code>False</code> is returned.""";
 
   // scan()
 
@@ -656,10 +661,10 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
        and thus do not count as &quot;read&quot;.
        <div style='margin-top:0.5em'>To cope with elements that are redundant,
        <a href='#common.scan'>scan()</a> can be used:</div>
-      <div style='margin:0.3em 0 0 1.2em'><code>let array = CBOR.from_diagnostic(`[3, {}]`);<br>
-      let operation = array.get(0).get_int8();<br>
-      array.get(1).scan();&nbsp;&nbsp;&nbsp;&nbsp;// mark array[1] as read<br>
-      array.check_for_unread();</code></div>""";
+      <div style='margin:0.3em 0 0 1.2em'><code>array = CBOR.from_diagnostic(`[3, {}]`)<br>
+      operation = array.get(0).get_int8()<br>
+      array.get(1).scan()&nbsp;&nbsp;&nbsp;&nbsp;# mark array[1] as read<br>
+      array.check_for_unread()</code></div>""";
 
   // to_diagnostic()
 
@@ -674,7 +679,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       this method can also be used to generate JSON data.</div>""";
 
   static final String TODIAG_P1_DESCR = """
-      If <kbd><i>pretty_print</i></kbd> is <code>true</code>,
+      If <kbd><i>pretty_print</i></kbd> is <code>True</code>,
       additional white space is inserted between individual objects
       in maps and arrays, to make the result easier to read.""";
 
@@ -684,7 +689,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   static final String TOSTRING_DESCR = """
       Render <kbd>self</kbd> in <a href='#main.diagnostic'>Diagnostic Notation</a>.
       Equivalent to calling <a href='#common.todiagnostic'>to_diagnostic()</a>
-      with a <code>true</code> argument.""";
+      with a <code>True</code> argument.""";
 
   // CBOR.addArrays()
 
@@ -800,14 +805,14 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       <span style='white-space:nowrap'><code>253402300799</code> (<code>"9999-12-31T23:59:59Z"</code>)</span>,
       a <a href='#main.errors'>CBOR.Exception</a> is thrown.</div>
       <div style='margin-top:0.5em'>
-      If <kbd><i>millis</i></kbd> is <code>true</code> a <a href='#wrapper.cbor.float'>CBOR.Float</a>
+      If <kbd><i>millis</i></kbd> is <code>True</code> a <a href='#wrapper.cbor.float'>CBOR.Float</a>
       object holding seconds with a milliseconds fraction will be created,
       else a <a href='#wrapper.cbor.int'>CBOR.Int</a>
       object holding seconds will be created.</div>
       <div style='margin-top:0.5em'>Sample code:</div>
       <div style='margin:0.3em 0 0 1.2em'>
-      <code>let epoch = CBOR.create_epoch_time(new Date(), false);<br>
-      console.log(epoch.to_string());&nbsp;&nbsp;// Diagnostic notation<br>
+      <code>import datetime<br><br>epoch = CBOR.create_epoch_time(datetime.datetime.now(), False)<br>
+      print(epoch.to_string())&nbsp;&nbsp;# Diagnostic notation<br>
       <span style='color:#007fdd'>1764939916</span></code></div>
       <div style='margin-top:0.5em'>
       See also <a href='#time.getepochtime'>get_epoch_time()</a>.</div>""";
@@ -816,13 +821,13 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Time source object.""";
 
   static final String CREATE_TIME_P_MILLIS = """
-      If <kbd><i>millis</i></kbd> is <code>true</code>,
+      If <kbd><i>millis</i></kbd> is <code>True</code>,
       the milliseconds of the <kbd><i>instant</i></kbd> object will be
       featured in the created time object.  Note: if the millisecond
       part of the <kbd><i>instant</i></kbd> object is zero,
-      <kbd><i>millis</i></kbd> is considered to be <code>false</code>.
+      <kbd><i>millis</i></kbd> is considered to be <code>False</code>.
       <div style='margin-top:0.5em'>If <kbd><i>millis</i></kbd> is
-      <code>false</code>, the millisecond part of the <kbd><i>instant</i></kbd>
+      <code>False</code>, the millisecond part of the <kbd><i>instant</i></kbd>
       object will not be used, but may after <i>rounding</i>,
       add a second to the created time object.</div>""";
   
@@ -830,7 +835,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Wrapper holding an <code>EpochTime</code> object.""";
 
   static final String CREATE_TIME_P_UTC = """
-      If <kbd><i>utc</i></kbd> is <code>true</code>,
+      If <kbd><i>utc</i></kbd> is <code>True</code>,
       the <code>UTC</code> time zone (denoted by a terminating <code>Z</code>) will be used,
       else the local time followed by the <code>UTC</code> offset
       (<code>&plusmn;hh:mm</code>) will be used.""";
@@ -849,13 +854,15 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       <code style='white-space:nowrap'>"9999-12-31T23:59:59Z"</code>,
       a <a href='#main.errors'>CBOR.Exception</a> is thrown.</div>
       <div style='margin-top:0.5em'>
-      If <kbd><i>millis</i></kbd> is <code>true</code> the date/time string will feature
+      If <kbd><i>millis</i></kbd> is <code>True</code> the date/time string will feature
       milliseconds (<code>.nnn</code>) as well.</div>
       <div style='margin-top:0.5em'>Sample code:</div>
       <div style='margin:0.3em 0 0 1.2em'>
-      <code>let dateTime = CBOR.create_date_time(new Date(), true, false);<br>
-      console.log(dateTime.to_string());&nbsp;&nbsp;// Diagnostic notation<br>
-      <span style='color:#007fdd'>"2025-12-05T13:55:42.418+01:00"</span></code></div>
+      <code>import datetime<br><br>
+      date_time = CBOR.create_date_time(<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;datetime.datetime.now(), True, False)<br>
+      print(date_time.to_string())&nbsp;&nbsp;# Diagnostic notation<br>
+      <span style='color:#007fdd'>"2026-02-05T13:55:42.418+01:00"</span></code></div>
       <div style='margin-top:0.5em'>
       See also <a href='#time.getdatetime'>get_date_time()</a>.</div>""";
   
@@ -906,7 +913,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       <ul style='padding:0;margin:0 0 0.5em 1.2em'>
       <li style='margin-top:0'>The decoder returns after having decoded
       a <i>single</i> CBOR object, while preparing for the next object.</li>
-      <li>If no data is found (EOF), <code>null</code> is returned
+      <li>If no data is found (EOF), <code>None</code> is returned
       (<i>empty</i> sequences are permitted).</li>
       </ul>
       Note that data that has not yet been decoded, is not verified for correctness.
@@ -943,7 +950,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Unsupported or malformed CBOR data cause a <a href='#main.errors'>CBOR.Exception</a> to be thrown.</div>""";
 
   static final String DECODEEXT_RETURN_DESCR = """
-      Object or <code>null</code> (for EOF sequences only).""";
+      Object or <code>None</code> (for EOF sequences only).""";
   
   // Decoder.set_max_nesting_level()
 
@@ -1120,10 +1127,11 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
     JS_INT("int"),
     JS_FLOAT("float"),
     JS_ARRAY("[CBOR.<i>Wrapper</i>...]"),
-    JS_DATE("Date"),
-    JS_BOOLEAN("Boolean"),
+    JS_DATE("timestamp"),
+    JS_BOOLEAN("bool"),
     JS_STRING("str"),
-    JS_DYNAMIC("function|=&gt;"),
+    JS_DYNAMIC("function_ref"),
+    JS_ANY("<i>any</i>"),
     JS_UINT8ARRAY("bytes");
 
     String text;
@@ -1579,16 +1587,27 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
         "</div></div>";
   }
 
+    String exampleMain() {
+    return """
+        This section provides a few examples on how to use the CBOR API.
+        Note that the following declaration must be included at the top
+        of each source file:
+        <div style='margin:0.8em 0 0 2em'>
+        <code>from org.webpki.cbor import CBOR</code></div>
+        """;
+  }
+
+
   String exampleEncode() {
     return """
         The following code shows how you can create CBOR-encoded data:
         """ +
         codeBlock("""
-            let cbor = CBOR.Map()
-                           .set(CBOR.Int(1), CBOR.Float(45.7))
-                           .set(CBOR.Int(2), CBOR.String("Hi there!")).encode();
+            cbor = CBOR.Map()  \\
+                       .set(CBOR.Int(1), CBOR.Float(45.7))  \\
+                       .set(CBOR.Int(2), CBOR.String("Hi there!")).encode()
 
-            console.log(CBOR.toHex(cbor));
+            print(cbor.hex())
             %%a201fb4046d9999999999a0269486920746865726521%%
                   """);
   }
@@ -1599,15 +1618,15 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
         here using the result of the previous encoding example:
         """ +
         codeBlock("""
-            let map = CBOR.decode(cbor);
+            map = CBOR.decode(cbor)  # Using the result from encoding
 
-            console.log(map.to_string());  // Diagnostic notation
+            print(map.to_string())   # Diagnostic notation
             %%{
               1: 45.7,
               2: "Hi there!"
             }%%
 
-            console.log('Value=' + map.get(CBOR.Int(1)).get_float64());
+            print("Value=" + str(map.get(CBOR.Int(1)).get_float64()))
             %%Value=45.7%%
                   """);
   }
@@ -1617,15 +1636,14 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
         The following code shows how you can decode variant CBOR-encoded data:
         """ +
         codeBlock("""
-            let intOrString = CBOR.decode(cbor);
-            if (intOrString instanceof CBOR.Int) {
-              let i = intOrString.get_int32();
-              // Do something with i...
-            } else {
-              // Throws a CBOR.Exception if the object is not a CBOR.String
-              let s = intOrString.get_string();
-              // Do something with s...
-            }
+            int_or_string = CBOR.decode(cbor)
+            if isinstance(int_or_string, CBOR.Int):
+                i = int_or_string.get_int32()
+                # Do something with i...
+            else:
+                # Throws a CBOR.Exception if the object is not a CBOR.String
+                s = int_or_string.get_string()
+                # Do something with s...
                   """);
   }
 
@@ -1635,13 +1653,13 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
         <a href='#main.diagnostic'>Diagnostic&nbsp;Notation</a>:
         """ +
         codeBlock("""
-            let cbor = CBOR.from_diagnostic(`{
+            cbor = CBOR.from_diagnostic(\"\"\"{
             # Comments are also permitted
               1: 45.7,
               2: "Hi there!"
-            }`).encode();
+            }\"\"\").encode()
 
-            console.log(CBOR.toHex(cbor));
+            print(cbor.hex())
             %%a201fb4046d9999999999a0269486920746865726521%%
                   """);
   }
@@ -1651,12 +1669,12 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
         The following code shows how you can create CBOR sequences:
         """ +
         codeBlock("""
-            let cbor = CBOR.Array()
-              .add(CBOR.Map().set(CBOR.Int(7), CBOR.String("Hi!")))
-              .add(CBOR.Float(4.5))
-              .encode_as_sequence();
+            cbor = CBOR.Array()  \\
+                .add(CBOR.Map().set(CBOR.Int(7), CBOR.String("Hi!")))  \\
+                .add(CBOR.Float(4.5))  \\
+                .encode_as_sequence()
 
-            console.log(CBOR.toHex(cbor));
+            print(cbor.hex())
             %%a10763486921f94480%%
                   """);
   }
@@ -1667,11 +1685,11 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
         here using the result of the previous encoding example:
         """ +
         codeBlock("""
-            let decoder = CBOR.init_decoder(cbor, CBOR.SEQUENCE_MODE);
-            let object;
-            while (object = decoder.decode_with_options()) {
-              console.log('\\n' + object.to_string());
-            }
+            import io
+
+            decoder = CBOR.init_decoder(io.BytesIO(cbor), CBOR.SEQUENCE_MODE, 10000)
+            while object := decoder.decode_with_options():
+                print('\\n' + object.to_string())
             
             %%{
               7: "Hi!"
@@ -1978,8 +1996,9 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
         .addParameter("object", DataTypes.CBOR_Any, OBJECT_PARAMETER_DESCR)
         .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
 
-        .addMethod("setDynamic", W_MAP_SET_DYN_DESCR)
-        .addParameter("dynamic", DataTypes.JS_DYNAMIC, W_MAP_SET_DYN_PARAMETER_DESCR)
+        .addMethod("set_dynamic", W_MAP_SET_DYN_DESCR)
+        .addParameter("function", DataTypes.JS_DYNAMIC, W_MAP_SET_DYN_FUNC_PARAMETER_DESCR)
+        .addParameter("argument", DataTypes.JS_ANY, W_MAP_SET_DYN_ARG_PARAMETER_DESCR)
         .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
 
         .addMethod("merge", W_MAP_MERGE_DESCR)
@@ -2170,7 +2189,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
     replace(DETERMINISTIC_ENCODING, printMainHeader("deterministic", "Deterministic Encoding"));
     outline.increment();
 
-    replace(EXAMPLES, printMainHeader("examples", "Using the CBOR API"));
+    replace(EXAMPLES, printMainHeader("examples", "Using the CBOR API") + 
+       exampleMain());
     outline.indent();
     replace(EXAMPLES_ENC, printSubHeader("examples.encoding", "Encode CBOR Data") +
         exampleEncode());

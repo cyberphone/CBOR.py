@@ -39,6 +39,7 @@ public class BuildSystem {
     addFile("integer.py");
     addFile("int-ranges.py");
     addFile("nondeterministic.py");
+    addFile("dynamic.py");
     addFile("diagnostic.py");
     addFile("check-for-unread.py");
     addFile("sequence.py");
