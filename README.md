@@ -1,4 +1,4 @@
-<a id="cborpy"></a>
+<a id="main"></a>
 &nbsp;
 
 <picture>
@@ -113,9 +113,9 @@ while remaining faithful to the native CBOR representation.
 |-|-|
 |JDK&nbsp;21+|https://github.com/cyberphone/openkeystore|
 |Android/Java|https://github.com/cyberphone/android-cbor|
-|JavaScript|https://github.com/cyberphone/CBOR.js#cborjs|
+|JavaScript|https://github.com/cyberphone/CBOR.js#main|
 
-Updated: 2026-03-01
+Updated: 2026-03-02
 
 
 
