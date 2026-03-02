@@ -689,108 +689,6 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Equivalent to calling <a href='#common.todiagnostic'>to_diagnostic()</a>
       with a <code>True</code> argument.""";
 
-  // CBOR.addArrays()
-
-  static final String ADDARRAYS_DESCR = """
-      Add two arrays.""";
-
-  static final String ADDARRAYS_P1_DESCR = """
-      First array.""";
-
-  static final String ADDARRAYS_P2_DESCR = """
-      Second array.""";
-
-  static final String ADDARRAYS_RETURN_DESCR = """
-      Concatenation of array <kbd><i>a</i></kbd> and <kbd><i>b</i></kbd>.""";
-
-  // CBOR.compareArrays()
-
-  static final String CMPARRAYS_DESCR = """
-      Compare two arrays lexicographically.""";
-
-  static final String CMPARRAYS_P1_DESCR = """
-      First array.""";
-
-  static final String CMPARRAYS_P2_DESCR = """
-      Second array.""";
-
-  static final String CMPARRAYS_RETURN_DESCR = """
-      If <kbd><i>a</i></kbd> and <kbd><i>b</i></kbd> are identical,
-      <kbd>0</kbd> is retuned.
-      If <kbd><i>a</i>&nbsp;&gt;&nbsp;<i>b</i></kbd>,
-      a positive number is returned.
-      If <kbd><i>a</i>&nbsp;&lt;&nbsp;<i>b</i></kbd>,
-      a negative number is returned.""";
-
-  // CBOR.toHex()
-
-  static final String TOHEX_DESCR = """
-      Encode binary string to hexadecimal.""";
-
-  static final String TOHEX_P1_DESCR = """
-      Zero or more bytes to be encoded.""";
-
-  static final String TOHEX_RETURN_DESCR = """
-      Hexadecimal encoded data.""";
-
-  // CBOR.fromHex()
-
-  static final String FROMHEX_DESCR = """
-      Decode hexadecimal data into binary.""";
-
-  static final String FROMHEX_P1_DESCR = """
-      String with zero or more hexadecimal pairs. Each pair represents one byte.""";
-
-  static final String FROMHEX_RETURN_DESCR = """
-      The resulting binary (bytes).""";
-
-  // CBOR.toBase64Url()
-
-  static final String TOB64U_DESCR = """
-      Encode binary string to base64Url.""";
-
-  static final String TOB64U_P1_DESCR = """
-      Zero or more bytes to be encoded.""";
-
-  static final String TOB64U_RETURN_DESCR = """
-      Base64Url encoded data.""";
-
-  // CBOR.fromBase64Url()
-
-  static final String FROMB64U_DESCR = """
-      Decode base64Url encoded data into binary.
-      Note that this method is <i>permissive</i>; it accepts
-      base64 encoded data as well as data with or without
-      <kbd>'='</kbd> padding.""";
-
-  static final String FROMB64U_P1_DESCR = """
-      String in base64Url notation.  The string may be empty.""";
-
-  static final String FROMB64U_RETURN_DESCR = """
-      The resulting binary (bytes).""";
-
-  // CBOR.toBigInt()
-
-  static final String TOBIGINT_DESCR = """
-      Convert binary string to BigInt.""";
-
-  static final String TOBIGINT_P1_DESCR = """
-      Zero or more bytes representing an <i>unsigned</i> number.""";
-
-  static final String TOBIGINT_RETURN_DESCR = """
-      Resulting BigInt number.""";
-
-  // CBOR.fromBigInt()
-
-  static final String FROMBIGINT_DESCR = """
-      Convert BigInt into binary string.""";
-
-  static final String FROMBIGINT_P1_DESCR = """
-      Value to be converted must be greater or equal to zero.""";
-
-  static final String FROMBIGINT_RETURN_DESCR = """
-      The resulting binary (one or more bytes).""";
-
   // CBOR.create_epoch_time()
 
   static final String CREATE_EPOCHTIME_DESCR = """
@@ -1994,19 +1892,6 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
         .addParameter("object", DataTypes.CBOR_Any, OBJECT_PARAMETER_DESCR)
         .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
 
-        .addMethod("set_dynamic", W_MAP_SET_DYN_DESCR)
-        .addParameter("function", DataTypes.JS_DYNAMIC, W_MAP_SET_DYN_FUNC_PARAMETER_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
-
-        .addMethod("merge", W_MAP_MERGE_DESCR)
-        .addParameter("map", DataTypes.CBOR_MAP, W_MAP_MERGE_P1_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
-
-        .addMethod("update", W_MAP_UPDATE_DESCR)
-        .addParameter("key", DataTypes.CBOR_Any, KEY_PARAMETER_DESCR)
-        .addParameter("object", DataTypes.CBOR_Any, OBJECT_PARAMETER_DESCR)
-        .addParameter("existing", DataTypes.JS_BOOLEAN, W_MAP_UPDATE_P3_DESCR)
-        .setReturn(DataTypes.CBOR_Any, W_MAP_UPDATE_RETURN_DESCR)
 
         .addMethod("get", W_MAP_GET_DESCR)
         .addParameter("key", DataTypes.CBOR_Any, KEY_PARAMETER_DESCR)
@@ -2024,6 +1909,20 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
         .addMethod("remove", W_MAP_REMOVE_DESCR)
         .addParameter("key", DataTypes.CBOR_Any, KEY_PARAMETER_DESCR)
         .setReturn(DataTypes.CBOR_Any, W_MAP_REMOVE_RETURN_DESCR)
+
+        .addMethod("set_dynamic", W_MAP_SET_DYN_DESCR)
+        .addParameter("function", DataTypes.JS_DYNAMIC, W_MAP_SET_DYN_FUNC_PARAMETER_DESCR)
+        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
+
+        .addMethod("merge", W_MAP_MERGE_DESCR)
+        .addParameter("map", DataTypes.CBOR_MAP, W_MAP_MERGE_P1_DESCR)
+        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
+
+        .addMethod("update", W_MAP_UPDATE_DESCR)
+        .addParameter("key", DataTypes.CBOR_Any, KEY_PARAMETER_DESCR)
+        .addParameter("object", DataTypes.CBOR_Any, OBJECT_PARAMETER_DESCR)
+        .addParameter("existing", DataTypes.JS_BOOLEAN, W_MAP_UPDATE_P3_DESCR)
+        .setReturn(DataTypes.CBOR_Any, W_MAP_UPDATE_RETURN_DESCR)
 
         .addMethod("get_keys", W_MAP_GETKEYS_DESCR)
         .setReturn(DataTypes.JS_ARRAY, W_MAP_GETKEYS_RETURN_DESCR)
