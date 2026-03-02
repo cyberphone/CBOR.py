@@ -68,7 +68,7 @@ public class CreateDocument {
       <div style='margin-top:0.5em'>
       Unlike <a href='#wrapper.cbor.float'>CBOR.Float()</a>,
       this method also supports the specific non-finite values,
-      <kbd>math.nan</kbd>, <kbd>math.inf</kbd>, and <kbd>-math.inf</kbd>.</div>
+      <kbd>math.nan</kbd>, <kbd>math.inf</kbd>, and <kbd>#8209;math.inf</kbd>.</div>
       <div style='margin-top:0.5em'>
       See also <a href='non-finite-numbers.html'>Non-Finite Numbers</a>.</div>""";
 
@@ -134,7 +134,7 @@ public class CreateDocument {
       value is a "regular" <code>float</code>, or one of
       the non-finite values, <kbd>math.nan</kbd>,
       <kbd>math.inf</kbd>,
-      or <kbd>-math.inf</kbd>.</div>""";
+      or <kbd>#8209;math.inf</kbd>.</div>""";
 
   static final String W_GETEXTFLOAT_RETURN_DESCR = """
       Decoded floating-point number.""";
