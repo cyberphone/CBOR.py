@@ -44,6 +44,7 @@ public class BuildSystem {
     addFile("check-for-unread.py");
     addFile("sequence.py");
     addFile("dates.py");
+    addFile("tags.py");
     addFile("clone.py");
     addFile("cotx.py");
     addFile("miscellaneous.py");
