@@ -1817,7 +1817,7 @@ class CBOR:
                 datetime.datetime.fromisoformat(temp + "Z"))
             diff = int(local_iso - true_iso)
             iso_string = "{:s}+{:02n}:{:02n}".format(
-                local, diff / 3600, diff % 3600)
+                local, math.floor(diff / 3600), math.floor(diff % 3600))
         return CBOR.String(iso_string)
     
         
