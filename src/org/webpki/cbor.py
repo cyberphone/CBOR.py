@@ -749,8 +749,8 @@ class CBOR:
             self._entries.insert(insert_index, new_entry)
             return self
 
-        def set_dynamic(self, function_ref, argument):
-            return function_ref(self, argument)
+        def set_dynamic(self, function_ref):
+            return function_ref(self)
 
         def _lookup(self, key, mustExist):
             encoded_key = CBOR._cbor_argument_check(key).encode()

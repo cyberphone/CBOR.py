@@ -429,18 +429,16 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       of <i>any</i> complexity can be used.</div>""";
 
   static final String W_MAP_SET_DYN_DESCR = """
-      Set map entries using an external function.
+      Set map entries using an external function while maintaining
+      chaining of set-operations.
       <div style='margin-top:0.5em'>The function will be called
-      with two paramaters: map instance and <kbd>argument</kbd>.
-      The function must return the map instance.</div>
+      with a single paramater holding the current object (map instance).
+      The function must return the current object.</div>
       <div style='margin-top:0.5em'>Consult test file
       <code>dynamic.py</code> for examples.</div>""";
 
   static final String W_MAP_SET_DYN_FUNC_PARAMETER_DESCR = """
       Parameter holding a reference (pointer) to the function.""";
-
-  static final String W_MAP_SET_DYN_ARG_PARAMETER_DESCR = """
-      Parameter holding an argument to the function.""";
 
   static final String W_MAP_MERGE_DESCR = """
       Merge maps.
@@ -1998,7 +1996,6 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
 
         .addMethod("set_dynamic", W_MAP_SET_DYN_DESCR)
         .addParameter("function", DataTypes.JS_DYNAMIC, W_MAP_SET_DYN_FUNC_PARAMETER_DESCR)
-        .addParameter("argument", DataTypes.JS_ANY, W_MAP_SET_DYN_ARG_PARAMETER_DESCR)
         .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
 
         .addMethod("merge", W_MAP_MERGE_DESCR)
