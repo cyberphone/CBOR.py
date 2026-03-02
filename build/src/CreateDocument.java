@@ -67,10 +67,8 @@ public class CreateDocument {
       Creates a CBOR <code>float</code> object.
       <div style='margin-top:0.5em'>
       Unlike <a href='#wrapper.cbor.float'>CBOR.Float()</a>,
-      this method also supports one of
-      the non-finite values, <kbd>math.nan</kbd>,
-      <kbd>math.inf</kbd>,
-      and <kbd>-math.inf</kbd>.</div>
+      this method also supports the specific non-finite values,
+      <kbd>math.nan</kbd>, <kbd>math.inf</kbd>, and <kbd>-math.inf</kbd>.</div>
       <div style='margin-top:0.5em'>
       See also <a href='non-finite-numbers.html'>Non-Finite Numbers</a>.</div>""";
 
