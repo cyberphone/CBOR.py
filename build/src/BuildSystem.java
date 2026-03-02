@@ -43,6 +43,7 @@ public class BuildSystem {
     addFile("diagnostic.py");
     addFile("check-for-unread.py");
     addFile("sequence.py");
+    addFile("dates.py");
     addFile("clone.py");
     addFile("cotx.py");
     addFile("miscellaneous.py");
