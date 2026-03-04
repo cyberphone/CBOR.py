@@ -81,7 +81,7 @@ oneTurn("CBOR.Tag(0, CBOR.String(\"2025-02-20T14:09:08Z\"))",
 
 # COTX
 oneTurn("CBOR.Tag(1010, CBOR.Array().add(CBOR.String(\"uri\")).add(CBOR.Map()))", "get()",
-    "Array element of type String with value=\"uri\" was never read")
+        "Array element of type Map with value={} was never read")
 
 res = CBOR.Tag(1010, CBOR.Array().add(CBOR.String("uri")).add(CBOR.Boolean(True)))
 assert_true("String problems", res.cotx_id == "uri")

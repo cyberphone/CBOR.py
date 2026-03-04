@@ -904,8 +904,8 @@ class CBOR:
                 case CBOR.Tag.TAG_COTX:
                     if isinstance(object, CBOR.Array) and object.length == 2:
                         array = object._objects
-                        self._cotx_id = array[0]
-                        if isinstance(self._cotx_id, CBOR.String):
+                        if isinstance(array[0], CBOR.String):
+                            self._cotx_id = array[0].get_string()
                             self._cotx_object = array[1]
                             return
                     self._error_in_object(CBOR.Tag.__ERR_COTX)
@@ -958,7 +958,7 @@ class CBOR:
         @property
         def cotx_id(self):
             self._check_cotx()
-            return self._cotx_id.get_string()
+            return self._cotx_id
 
         @property
         def cotx_object(self):
