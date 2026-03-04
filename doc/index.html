@@ -1445,7 +1445,7 @@ holds a CBOR <code>null</code> item, else <code>False</code> is returned.</td></
  and thus do not count as &quot;read&quot;.
  <div style='margin-top:0.5em'>To cope with elements that are redundant,
  <a href='#common.scan'>scan()</a> can be used:</div>
-<div style='margin:0.3em 0 0 1.2em'><code>array = CBOR.from_diagnostic(`[3, {}]`)<br>
+<div style='margin:0.3em 0 0 1.2em'><code>array = CBOR.from_diagnostic("[3, {}]")<br>
 operation = array.get(0).get_int8()<br>
 array.get(1).scan()&nbsp;&nbsp;&nbsp;&nbsp;# mark array[1] as read<br>
 array.check_for_unread()</code></div></td></tr>
