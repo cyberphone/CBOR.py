@@ -1028,8 +1028,8 @@ See also <a href='#cbor.map.setsortingmode'>set_sorting_mode()</a>.</div>
 <div style='margin-top:0.5em'>Note: this implementation
 presumes that <kbd>key</kbd> objects are <i>immutable</i>.
 That is, the following code will throw a <a href='#main.errors'>CBOR.Exception</a>:</div>
-<div style='margin:0.3em 0 0 1.2em'><code>key = CBOR.Array();<br>
-map = CBOR.Map().set(key, CBOR.Int(5));<br>
+<div style='margin:0.3em 0 0 1.2em'><code>key = CBOR.Array()<br>
+map = CBOR.Map().set(key, CBOR.Int(5))<br>
 key.add(CBOR.String("data"))  # Mutating key object</code></div>
 <div style='margin-top:0.3em'>By defining <kbd>key</kbd> objects inline
 (<i>chaining</i>) or by <i>preset variable declarations</i>, <kbd>key</kbd> objects
@@ -1492,7 +1492,7 @@ Unsupported or malformed CBOR data cause a <a href='#main.errors'>CBOR.Exception
 <h4 id='decoder.cbor.initdecoder'>5.2.&nbsp;&nbsp;CBOR.init_decoder()</h4>
 <div class='webpkifloat'>
 <table class='webpkitable' style='margin-left:2em;width:50em'>
-<tr><th>Syntax</th><td colspan='2' style='width:100%'><kbd>CBOR.init_decoder(<i>cbor</i>, <i>options</i>)</kbd></td></tr>
+<tr><th>Syntax</th><td colspan='2' style='width:100%'><kbd>CBOR.init_decoder(<i>cbor_stream</i>, <i>options</i>, <i>max_length</i>)</kbd></td></tr>
 <tr><th>Description</th><td colspan='2' style='width:100%'>Create a customized CBOR decoder.
 This decoding method presumes that the actual
 decoding is performed by one or more (for sequences only) calls to
@@ -1505,7 +1505,7 @@ See also <a href='#decoder.decoder.setmaxnestinglevel'><i>Decoder</i>.set_max_ne
 <a href='#decoder.decoder.getbytecount'><i>Decoder</i>.get_byte_count()</a>.</div></td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-<tr><td style='text-align:center'><kbd><i>cbor</i></kbd></td><td style='text-align:center'><kbd>bytes</kbd></td><td style='width:100%'>The CBOR data (bytes) to be decoded.</td></tr>
+<tr><td style='text-align:center'><kbd><i>cbor_stream</i></kbd></td><td style='text-align:center'><kbd>io.BufferedIOBase</kbd></td><td style='width:100%'>CBOR data supplied as a byte stream.</td></tr>
 <tr><td style='text-align:center'><kbd><i>options</i></kbd></td><td style='text-align:center'><kbd>int</kbd></td><td style='width:100%'>The decoder options.
 Multiple options can be combined using the binary OR-operator
 ("<code>|</code>").
@@ -1541,6 +1541,7 @@ that CBOR numbers conform to the
 <div>The <kbd>CBOR.LENIENT_NUMBER_DECODING</kbd> option makes the decoder
 accept different representations of CBOR <code>int/bigint</code>
 and <code>float</code> objects, only limited by <span style='white-space:nowrap'>[<a href='https://www.rfc-editor.org/rfc/rfc8949.html' title='RFC8949'>RFC8949<img src='xtl.svg' alt='link'></a>]</span>.</div></div></td></tr>
+<tr><td style='text-align:center'><kbd><i>max_length</i></kbd></td><td style='text-align:center'><kbd>int</kbd></td><td style='width:100%'>The maximum number of bytes accepted.</td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Returns</th><th colspan='2'>Description</th></tr>
 <tr><td style='text-align:center'><kbd><i>Decoder</i></kbd></td><td colspan='2' style='width:100%'>Decoder object to be used with
@@ -1556,8 +1557,9 @@ Structure refers to CBOR tags, arrays, and maps.
 Example: <code>[{}]</code> represents a nesting level of <code>2</code>.
 Usage in code:</div>
 <div style='margin:0.3em 0 0 1.2em'>
-<code style='white-space:nowrap'>CBOR.init_decoder(<i>cbor</i>, <i>options</i>)<br>
-&nbsp;&nbsp;.set_max_nesting_level(20)<br>
+<code style='white-space:nowrap'>CBOR.init_decoder(<i>cbor_stream</i>,
+<i>options</i>, <i>max_length</i>)&nbsp;&nbsp;\<br>
+&nbsp;&nbsp;.set_max_nesting_level(20)&nbsp;&nbsp;\<br>
 &nbsp;&nbsp;.decode_with_options()</code></div></td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>

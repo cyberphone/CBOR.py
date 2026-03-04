@@ -1,6 +1,6 @@
 
 import java.util.ArrayList;
-
+import java.util.Base64.Decoder;
 import java.util.regex.Pattern;
 
 import org.webpki.util.IO;
@@ -419,8 +419,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       <div style='margin-top:0.5em'>Note: this implementation
       presumes that <kbd>key</kbd> objects are <i>immutable</i>.
       That is, the following code will throw a <a href='#main.errors'>CBOR.Exception</a>:</div>
-      <div style='margin:0.3em 0 0 1.2em'><code>key = CBOR.Array();<br>
-      map = CBOR.Map().set(key, CBOR.Int(5));<br>
+      <div style='margin:0.3em 0 0 1.2em'><code>key = CBOR.Array()<br>
+      map = CBOR.Map().set(key, CBOR.Int(5))<br>
       key.add(CBOR.String("data"))  # Mutating key object</code></div>
       <div style='margin-top:0.3em'>By defining <kbd>key</kbd> objects inline
       (<i>chaining</i>) or by <i>preset variable declarations</i>, <kbd>key</kbd> objects
@@ -795,7 +795,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       <a href='#decoder.decoder.getbytecount'><i>Decoder</i>.get_byte_count()</a>.</div>""";
 
   static final String INITEXT_P1_DESCR = """
-      The CBOR data (bytes) to be decoded.""";
+      CBOR data supplied as a byte stream.""";
 
   static final String INITEXT_P2_DESCR = """
       The decoder options.
@@ -834,6 +834,9 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       accept different representations of CBOR <code>int/bigint</code>
       and <code>float</code> objects, only limited by ${RFC8949}.</div></div>""";
 
+static final String INITEXT_P3_DESCR = """
+      The maximum number of bytes accepted.""";
+
   static final String INITEXT_RETURN_DESCR = """
       Decoder object to be used with
       <a href='#decoder.decoder.decodewithoptions'><i>Decoder</i>.decode_with_options()</a>.""";
@@ -857,8 +860,9 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Example: <code>[{}]</code> represents a nesting level of <code>2</code>.
       Usage in code:</div>
       <div style='margin:0.3em 0 0 1.2em'>
-      <code style='white-space:nowrap'>CBOR.init_decoder(<i>cbor</i>, <i>options</i>)<br>
-      &nbsp;&nbsp;.set_max_nesting_level(20)<br>
+      <code style='white-space:nowrap'>CBOR.init_decoder(<i>cbor_stream</i>, 
+      <i>options</i>, <i>max_length</i>)&nbsp;&nbsp;\\<br>
+      &nbsp;&nbsp;.set_max_nesting_level(20)&nbsp;&nbsp;\\<br>
       &nbsp;&nbsp;.decode_with_options()</code></div>""";
 
   static final String SETMAXNESTINGLEVEL_P1_DESCR = """
@@ -1028,6 +1032,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
     JS_STRING("str"),
     JS_DYNAMIC("function_ref"),
     JS_ANY("<i>any</i>"),
+    JS_STREAM("io.BufferedIOBase"),
     JS_UINT8ARRAY("bytes");
 
     String text;
@@ -2001,8 +2006,9 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
     // CBOR.init_decoder()
 
     addDecoderMethod("CBOR.init_decoder", INITEXT_DESCR)
-        .addParameter("cbor", DataTypes.JS_UINT8ARRAY, INITEXT_P1_DESCR)
+        .addParameter("cbor_stream", DataTypes.JS_STREAM, INITEXT_P1_DESCR)
         .addParameter("options", DataTypes.JS_INT, INITEXT_P2_DESCR)
+        .addParameter("max_length", DataTypes.JS_INT, INITEXT_P3_DESCR)
         .setReturn(DataTypes.ExtendedDecoder, INITEXT_RETURN_DESCR);
     
     // Decoder.set_max_nesting_level()
