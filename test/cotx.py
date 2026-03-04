@@ -17,4 +17,9 @@ oneTurn('d903f281623737', '1010(["77"])', False)
 oneTurn('d903f28206623737', '1010([6, "77"])', False)
 oneTurn('d903f28262373707', '1010(["77", 7])', True)
 
+t = CBOR.Tag(1010, CBOR.Array().add(CBOR.String("uri")).add(CBOR.Array().add(CBOR.Map())))
+assert_true("objectId", t.cotx_id == "uri")
+assert_true("Object", t.cotx_object.get(0).to_string() == "{}")
+t.check_for_unread()
+
 success()
