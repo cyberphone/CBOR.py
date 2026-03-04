@@ -249,22 +249,19 @@ class CBOR:
                     self._object._traverse(self, None, check)
             if check:
                 if not self._read_flag:
-                    problem_item = type(self).__name__
-                    if self._is_primitive():
-                        problem_item += " with value={}".format(
-                            self.to_diagnostic(False))
-                    problem_item += " was never read"
+                    problem_item = "{} with value={} was never read".format(
+                        type(self).__name__, self.to_diagnostic(False))
                     if holding_object is not None:
                         if isinstance(holding_object, CBOR.Array):
-                            holder = "Array element of type"
+                            holder = "Array element of type "
                         elif isinstance(holding_object, CBOR.Tag):
-                            holder = "Tagged object {} of type".format(
+                            holder = "Tag object {} of type ".format(
                                 holding_object._tag_number)
                         else:
-                            holder = "Map key {} with argument".format(
+                            holder = "Map key {} with argument ".format(
                                 map_key.to_diagnostic(False))
-                        problem_item = holder + " " + problem_item
-                    CBOR._error(problem_item)
+                    else: holder = ""
+                    CBOR._error(holder + problem_item)
             else:
                 self._read_flag = True
 
