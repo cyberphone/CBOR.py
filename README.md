@@ -69,7 +69,7 @@ Value=45.7
 
 ### On-line Testing
 
-On https://cyberphone.github.io/CBOR.py/doc/playground.html you will find a simple Web application,
+On https://cyberphone.github.io/cbor-core/playground/ you will find a simple Web application,
 permitting testing a compatible encoder, decoder, and diagnostic notation implementation.
 
 ### PyPI Version
@@ -116,6 +116,7 @@ while remaining faithful to the native CBOR representation.
 |JavaScript|https://github.com/cyberphone/CBOR.js#main|
 
 Updated: 2026-03-02
+
 
 
 
