@@ -685,7 +685,9 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   static final String TOSTRING_DESCR = """
       Render <kbd>self</kbd> in <a href='#main.diagnostic'>Diagnostic Notation</a>.
       Equivalent to calling <a href='#common.todiagnostic'>to_diagnostic()</a>
-      with a <code>True</code> argument.""";
+      with a <code>True</code> argument.
+      <div style='margin-top:0.5em'>The Python <code>str(</code><i>object</i><code>)</code>
+      function is equivalent to <i>object</i><code>.to_string()</code>.</div>""";
 
   // CBOR.create_epoch_time()
 

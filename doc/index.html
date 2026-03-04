@@ -1404,7 +1404,9 @@ in maps and arrays, to make the result easier to read.</td></tr>
 <tr><th>Syntax</th><td style='width:100%'><kbd>to_string()</kbd></td></tr>
 <tr><th>Description</th><td style='width:100%'>Render <kbd>self</kbd> in <a href='#main.diagnostic'>Diagnostic Notation</a>.
 Equivalent to calling <a href='#common.todiagnostic'>to_diagnostic()</a>
-with a <code>True</code> argument.</td></tr>
+with a <code>True</code> argument.
+<div style='margin-top:0.5em'>The Python <code>str(</code><i>object</i><code>)</code>
+function is equivalent to <i>object</i><code>.to_string()</code>.</div></td></tr>
 <tr><td colspan='2' class='webpkidiv'></td></tr>
 <tr><th>Returns</th><th>Description</th></tr>
 <tr><td style='text-align:center'><kbd>str</kbd></td><td style='width:100%'>Textual version of the wrapped CBOR content.</td></tr>
