@@ -1799,27 +1799,23 @@ class CBOR:
         epoch = CBOR._check_time_parameters(instant, millis, True)
         return (CBOR.Float(epoch) if isinstance(epoch, float) 
                                   else CBOR.Int(epoch))
-    
+
+    @staticmethod
     def create_date_time(instant, millis, utc):
         epoc = CBOR._check_time_parameters(instant, millis, utc)
-        iso_string = datetime.datetime.fromtimestamp(
-            epoc, datetime.UTC).isoformat()
-        i = iso_string.find("+00:00")
-        if i > 0:
-            iso_string = CBOR._remove_trailing_zeros(iso_string[0:i]) + "Z"
-        if not utc:
-            """
-            This is very strange but there is no local timezone to find.
-            """
-            temp = local = CBOR._remove_trailing_zeros(
-                datetime.datetime.fromtimestamp(epoc).isoformat())
-            true_iso = datetime.datetime.timestamp(
-                datetime.datetime.fromisoformat(iso_string))
-            local_iso = datetime.datetime.timestamp(
-                datetime.datetime.fromisoformat(temp + "Z"))
-            diff = int(local_iso - true_iso)
-            iso_string = "{:s}+{:02n}:{:02n}".format(
-                local, math.floor(diff / 3600), math.floor(diff % 3600))
+        if utc:
+            iso_string = datetime.datetime.fromtimestamp(
+                epoc, datetime.UTC).isoformat()
+            if (i := iso_string.find("+00:00")) > 0 or \
+               (i := iso_string.find("Z")) > 0:
+                iso_string = CBOR._remove_trailing_zeros(iso_string[0:i]) + "Z"
+            else: CBOR._error("Internal error: " + iso_string)
+        else:
+            iso_string = datetime.datetime.fromtimestamp(
+                epoc, datetime.UTC).astimezone().isoformat()
+            i = len(iso_string) - 6
+            iso_string = \
+                CBOR._remove_trailing_zeros(iso_string[0:i]) + iso_string[i:]
         return CBOR.String(iso_string)
 
 
