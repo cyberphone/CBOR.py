@@ -527,7 +527,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       tag&nbsp;<code>1</code>
       (<a href='#time.getepochtime'>CBOR&nbsp;epoch&nbsp;time</a>),
       and tag&nbsp;<code>1010</code> ${COTX}.
-      </div>""";
+      </div><div style='margin-top:0.5em'>
+      See also <a href='#utility.cbor.createcotxtag'>CBOR.create_cotx_tag()</a>.</div>""";
 
   static final String W_TAG_P1_DESCR = """
       Tag number.""";
@@ -773,7 +774,10 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   // CBOR.create_cotx_tag()
 
   static final String CREATE_COTX_TAG_DESCR = """
-      Conveniance method for creating a ${COTX} compatible tag.""";
+      Conveniance method for creating a ${COTX} compatible tag.
+      <div style='margin-top:0.5em'>See also
+      <a href='#cbor.tag.cotxid'>cotx_id</a> and
+      <a href='#cbor.tag.cotxobject'>cotx_object</a>.</div>""";
 
   static final String CREATE_COTX_TAG_P_ID = """
       URL or other suitable identfier.""";

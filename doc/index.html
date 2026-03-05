@@ -1197,7 +1197,8 @@ thorough syntax checks on tag&nbsp;<code>0</code>
 tag&nbsp;<code>1</code>
 (<a href='#time.getepochtime'>CBOR&nbsp;epoch&nbsp;time</a>),
 and tag&nbsp;<code>1010</code> <span style='white-space:nowrap'>[<a href='https://datatracker.ietf.org/doc/draft-rundgren-cotx/' title='COTX'>COTX<img src='xtl.svg' alt='link'></a>]</span>.
-</div></td></tr>
+</div><div style='margin-top:0.5em'>
+See also <a href='#utility.cbor.createcotxtag'>CBOR.create_cotx_tag()</a>.</div></td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
 <tr><td style='text-align:center'><kbd><i>tag_number</i></kbd></td><td style='text-align:center'><kbd>int</kbd></td><td style='width:100%'>Tag number.</td></tr>
@@ -1730,7 +1731,10 @@ add a second to the created time object.</div></td></tr>
 <div class='webpkifloat'>
 <table class='webpkitable' style='margin-left:2em;width:50em'>
 <tr><th>Syntax</th><td colspan='2' style='width:100%'><kbd>CBOR.create_cotx_tag(<i>id</i>, <i>object</i>)</kbd></td></tr>
-<tr><th>Description</th><td colspan='2' style='width:100%'>Conveniance method for creating a <span style='white-space:nowrap'>[<a href='https://datatracker.ietf.org/doc/draft-rundgren-cotx/' title='COTX'>COTX<img src='xtl.svg' alt='link'></a>]</span> compatible tag.</td></tr>
+<tr><th>Description</th><td colspan='2' style='width:100%'>Conveniance method for creating a <span style='white-space:nowrap'>[<a href='https://datatracker.ietf.org/doc/draft-rundgren-cotx/' title='COTX'>COTX<img src='xtl.svg' alt='link'></a>]</span> compatible tag.
+<div style='margin-top:0.5em'>See also
+<a href='#cbor.tag.cotxid'>cotx_id</a> and
+<a href='#cbor.tag.cotxobject'>cotx_object</a>.</div></td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
 <tr><td style='text-align:center'><kbd><i>id</i></kbd></td><td style='text-align:center'><kbd>str</kbd></td><td style='width:100%'>URL or other suitable identfier.</td></tr>
@@ -1939,6 +1943,6 @@ here using the result of the previous encoding example:
 
   API version: Beta 1.0.0.  Note that the current API version is accessible through
   the static property <kbd>CBOR.version</kbd>.<br>
-  Document version: 2026-03-02
+  Document version: 2026-03-05
 </body>
 </html>
