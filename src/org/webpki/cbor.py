@@ -955,6 +955,11 @@ class CBOR:
                 self._error_in_object(CBOR.Tag.__ERR_COTX)
             self.get()
 
+        @staticmethod
+        def create_cotx_tag(id, object):
+            return CBOR.Tag(CBOR.Tag.TAG_COTX,
+                CBOR.Array().add(CBOR.String(id)).add(object))
+
         @property
         def cotx_id(self):
             self._check_cotx()
@@ -1816,15 +1821,8 @@ class CBOR:
             iso_string = "{:s}+{:02n}:{:02n}".format(
                 local, math.floor(diff / 3600), math.floor(diff % 3600))
         return CBOR.String(iso_string)
-    
-    ####################################
-    #      CBOR.create_cotx_tag()      #
-    ####################################
-    @staticmethod
-    def create_cotx_tag(id, object):
-        return CBOR.Tag(CBOR.Tag.TAG_COTX,
-            CBOR.Array().add(CBOR.String(id)).add(object))
-        
+
+
     #================================#
     #    Internal Support Methods    #
     #================================#

@@ -528,7 +528,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       (<a href='#time.getepochtime'>CBOR&nbsp;epoch&nbsp;time</a>),
       and tag&nbsp;<code>1010</code> ${COTX}.
       </div><div style='margin-top:0.5em'>
-      See also <a href='#utility.cbor.createcotxtag'>CBOR.create_cotx_tag()</a>.</div>""";
+      See also <a href='#cbor.tag.createcotxtag'>CBOR.Tag.create_cotx_tag()</a>.</div>""";
 
   static final String W_TAG_P1_DESCR = """
       Tag number.""";
@@ -552,13 +552,13 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       COTX ${COTX} support:
       object ID string.<div style='margin-top:0.5em'>
       Only valid for COTX tags.
-      See also <a href='#utility.cbor.createcotxtag'>CBOR.create_cotx_tag()</a>.</div>""";
+      See also <a href='#cbor.tag.createcotxtag'>CBOR.Tag.create_cotx_tag()</a>.</div>""";
 
   static final String W_TAG_PROP_COTX_OBJECT_DESCR = """
       COTX ${COTX} support:
       wrapped object.<div style='margin-top:0.5em'>
       Only valid for COTX tags.
-      See also <a href='#utility.cbor.createcotxtag'>CBOR.create_cotx_tag()</a>.</div>""";
+      See also <a href='#cbor.tag.createcotxtag'>CBOR.Tag.create_cotx_tag()</a>.</div>""";
 
   // CBOR.Simple
 
@@ -771,7 +771,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   static final String CREATE_DATETIME_RETURN_DESCR = """
       Wrapper holding a <code>DateTime</code> object.""";
 
-  // CBOR.create_cotx_tag()
+  // CBOR.Tag.create_cotx_tag()
 
   static final String CREATE_COTX_TAG_DESCR = """
       Conveniance method for creating a ${COTX} compatible tag.
@@ -1969,11 +1969,16 @@ static final String INITEXT_P3_DESCR = """
         .addWrapperParameter("tag_number", DataTypes.PY_INT, W_TAG_P1_DESCR)
         .addWrapperParameter("object", DataTypes.CBOR_Any, W_TAG_P2_DESCR)
 
+        .addMethod("get", W_TAG_GET_DESCR)
+        .setReturn(DataTypes.CBOR_Any, W_TAG_GET_RETURN_DESCR)
+
         .addMethod("get_tag_number", W_TAG_GETNUM_DESCR)
         .setReturn(DataTypes.PY_INT, W_TAG_GETNUM_RETURN_DESCR)
 
-        .addMethod("get", W_TAG_GET_DESCR)
-        .setReturn(DataTypes.CBOR_Any, W_TAG_GET_RETURN_DESCR)
+        .addMethod("CBOR.Tag.create_cotx_tag", CREATE_COTX_TAG_DESCR)
+        .addParameter("id", DataTypes.PY_STRING, CREATE_COTX_TAG_P_ID)
+        .addParameter("object", DataTypes.CBOR_Any, CREATE_COTX_TAG_P_OBJECT)
+        .setReturn(DataTypes.CBOR_TAG, CREATE_COTX_TAG_RETURN_DESCR)
 
         .setProperty("cotx_id", DataTypes.PY_STRING, W_TAG_PROP_COTX_ID_DESCR)
         .setProperty("cotx_object", DataTypes.CBOR_Any, W_TAG_PROP_COTX_OBJECT_DESCR);
@@ -2078,13 +2083,6 @@ static final String INITEXT_P3_DESCR = """
         .addParameter("instant", DataTypes.PY_DATE, CREATE_TIME_P_DATE)
         .addParameter("millis", DataTypes.PY_BOOLEAN, CREATE_TIME_P_MILLIS)
         .setReturn(DataTypes.CBOR_Any, CREATE_EPOCHTIME_RETURN_DESCR);
-
-    // CBOR.create_cotx_tag()
-
-    addUtilityMethod("CBOR.create_cotx_tag", CREATE_COTX_TAG_DESCR)
-        .addParameter("id", DataTypes.PY_STRING, CREATE_COTX_TAG_P_ID)
-        .addParameter("object", DataTypes.CBOR_Any, CREATE_COTX_TAG_P_OBJECT)
-        .setReturn(DataTypes.CBOR_TAG, CREATE_COTX_TAG_RETURN_DESCR);
 
     replace(INTRO, printMainHeader("intro", "Introduction"));
     outline.increment();

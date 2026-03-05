@@ -919,7 +919,7 @@ assert_true("Object", t.cotx_object.get(0).to_string() == "{}")
 t.check_for_unread()
 assert_true("objectId", t.cotx_id == "uri") # cotx_id is excluded from the check_for_unread() test.
 
-assert_true("cotx", t == CBOR.create_cotx_tag("uri", CBOR.Array().add(CBOR.Map())))
+assert_true("cotx", t == CBOR.Tag.create_cotx_tag("uri", CBOR.Array().add(CBOR.Map())))
 
 success()
 """],
