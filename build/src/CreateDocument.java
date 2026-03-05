@@ -1,6 +1,5 @@
 
 import java.util.ArrayList;
-import java.util.Base64.Decoder;
 import java.util.regex.Pattern;
 
 import org.webpki.util.IO;
@@ -55,7 +54,7 @@ public class CreateDocument {
   static final String W_FLOAT_DESCR = """
       Constructor.  Creates a CBOR <code>float</code> object.
       <div style='margin-top:0.5em'>
-      See also <a href='#jsnumbers.fp'>Floating-Point Numbers</a>.</div>
+      See also <a href='#numbers.floating-point'>Floating-Point Numbers</a>.</div>
       <div style='margin-top:0.5em'>
       For supporting <code>NaN</code> and <code>Infinity</code>, see
       <a href='non-finite-numbers.html'>Non-Finite Numbers</a>.</div>""";
@@ -270,7 +269,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       <div style='margin-top:0.5em'>
       This method performs a
       <a href='#cbor.string.getstring'>get_string()</a>.
-      The returned string is subsequently used for initiating a JavaScript <kbd>Date</kbd> object.</div>
+      The returned string is subsequently used for initiating a
+      Python <kbd>datetime</kbd> object.</div>
       <div style='margin-top:0.5em'>
       If not <i>all</i> of the following conditions are met, a 
       <a href='#main.errors'>CBOR.Exception</a> is thrown:
@@ -296,7 +296,8 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       Depending on the type of the current object, this method performs a
       <a href='#cbor.int.getint53'>get_int53()</a> or a 
       <a href='#cbor.float.getfloat64'>get_float64()</a>.
-      The returned number is subsequently used for initiating a JavaScript <kbd>Date</kbd> object.</div>
+      The returned number is subsequently used for initiating a
+      Python <kbd>datetime</kbd> object.</div>
       <div style='margin-top:0.5em'>
       If not <i>all</i> of the following conditions are met, a <a href='#main.errors'>CBOR.Exception</a> is thrown:
       <ul style='padding:0;margin:0 0 0.5em 1.2em'>
@@ -389,7 +390,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   static final String W_ARRAY_TOARR_DESCR = """
       Copy array.""";
 
-  static final String W_ARRAY_TOARR_RETURN_DESCR = "JavaScript array holding a copy of current <kbd>"
+  static final String W_ARRAY_TOARR_RETURN_DESCR = "Array holding a copy of current <kbd>"
       + DataTypes.CBOR_Any + "</kbd> objects.";
 
   static final String W_ARRAY_ENC_AS_SEQ_DESCR = """
@@ -492,7 +493,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   static final String W_MAP_GETKEYS_DESCR = """
       Get map keys.""";
 
-  static final String W_MAP_GETKEYS_RETURN_DESCR = "JavaScript array holding a copy of current key objects.";
+  static final String W_MAP_GETKEYS_RETURN_DESCR = "Array holding a copy of current key objects.";
 
   static final String W_MAP_SET_SORTING_MODE_DESCR = """
       Set the sorting mode of the
@@ -550,13 +551,13 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       COTX ${COTX} support:
       object ID string.<div style='margin-top:0.5em'>
       Only valid for COTX tags.
-      See also <a href='#cbor.tag.gettagnumber'>get_tag_number()</a>.</div>""";
+      See also <a href='#utility.cbor.createcotxtag'>CBOR.create_cotx_tag()</a>.</div>""";
 
   static final String W_TAG_PROP_COTX_OBJECT_DESCR = """
       COTX ${COTX} support:
       wrapped object.<div style='margin-top:0.5em'>
       Only valid for COTX tags.
-      See also <a href='#cbor.tag.gettagnumber'>get_tag_number()</a>.</div>""";
+      See also <a href='#utility.cbor.createcotxtag'>CBOR.create_cotx_tag()</a>.</div>""";
 
   // CBOR.Simple
 
@@ -602,13 +603,17 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
 
   // equals()
 
-  static final String EQUALS_DESCR = 
-      "Compare <kbd>self</kbd> with another CBOR object." +
-      "<div style='margin-top:0.5em'>" +
-      "The result is <code>True</code> if and only if <kbd>object</kbd> is not " +
-      "<code>None</code> and is a <kbd>" +
-      DataTypes.CBOR_Any.toString() + "</kbd>, and the associated binary encodings " +
-      "(as provided by <a href='#common.encode'>encode()</a>) are equivalent.</div>";
+  static final String EQUALS_DESCR = """
+      Compare <kbd>self</kbd> with another CBOR object.
+      <div style='margin-top:0.5em'>
+      The result is <code>True</code> if and only if <kbd>object</kbd> is not
+       <code>None</code> and is a <kbd>""" +
+      DataTypes.CBOR_Any.toString() + """
+      </kbd>, and the associated binary encodings
+       (as provided by <a href='#common.encode'>encode()</a>) are equivalent.</div>
+      <div style='margin-top:0.5em'>
+      Note that <code>equals()</code> is equivalent to the
+      Python '<code>==</code>' operator.</div>""";
 
   static final String EQUALS_P1_DESCR = """
       Argument to compare with.""";
@@ -765,13 +770,29 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
   static final String CREATE_DATETIME_RETURN_DESCR = """
       Wrapper holding a <code>DateTime</code> object.""";
 
+  // CBOR.create_cotx_tag()
+
+  static final String CREATE_COTX_TAG_DESCR = """
+      Conveniance method for creating a ${COTX} compatible tag.""";
+
+  static final String CREATE_COTX_TAG_P_ID = """
+      URL or other suitable identfier.""";
+
+  static final String CREATE_COTX_TAG_P_OBJECT = """
+      Tagged object.""";
+
+  static final String CREATE_COTX_TAG_RETURN_DESCR = """
+      Wrapper holding a <code>COTX</code> object.""";
+
   // CBOR.decode()
 
   static final String DECODE_DESCR = """
       Decode (aka &quot;deserialize&quot;) CBOR object.
       <div style='margin-top:0.5em'>This method is equivalent to:</div>
       <div style='margin:0.3em 0 0.5em 1.2em'>
-      <code style='white-space:nowrap'>CBOR.init_decoder(<i>cbor</i>, 0).decode_with_options()</code></div>
+      <code style='white-space:nowrap'>import io<br><br>
+      CBOR.init_decoder(io.BytesIO(<i>cbor</i>), 0,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;len(<i>cbor</i>)).decode_with_options()</code></div>
       Unsupported or malformed CBOR data cause a <a href='#main.errors'>CBOR.Exception</a> to be thrown.""";
 
   static final String DECODE_P1_DESCR = """
@@ -905,7 +926,7 @@ static final String INITEXT_P3_DESCR = """
 
   static final String DIAGDECSEQ_P1_DESCR = DIAGDEC_P1_DESCR;
 
-  static final String DIAGDECSEQ_RETURN_DESCR = "JavaScript array holding zero or more objects.";
+  static final String DIAGDECSEQ_RETURN_DESCR = "Array holding zero or more objects.";
 
   static final String INTRO = "${INTRO}";
 
@@ -1022,18 +1043,18 @@ static final String INITEXT_P3_DESCR = """
     CBOR_TAG("CBOR.Tag"),
     CBOR_SIMPLE("CBOR.Simple"),
 
-    JS_THIS("self"),
+    PY_THIS("self"),
 
-    JS_INT("int"),
-    JS_FLOAT("float"),
-    JS_ARRAY("[CBOR.<i>Wrapper</i>...]"),
-    JS_DATE("timestamp"),
-    JS_BOOLEAN("bool"),
-    JS_STRING("str"),
-    JS_DYNAMIC("function_ref"),
-    JS_ANY("<i>any</i>"),
-    JS_STREAM("io.BufferedIOBase"),
-    JS_UINT8ARRAY("bytes");
+    PY_INT("int"),
+    PY_FLOAT("float"),
+    PY_ARRAY("[CBOR.<i>Wrapper</i>...]"),
+    PY_DATE("datetime"),
+    PY_BOOLEAN("bool"),
+    PY_STRING("str"),
+    PY_DYNAMIC("function_ref"),
+    PY_ANY("<i>any</i>"),
+    PY_STREAM("io.BufferedIOBase"),
+    PY_BYTES("bytes");
 
     String text;
 
@@ -1623,7 +1644,7 @@ static final String INITEXT_P3_DESCR = """
     }
     description.append("</div>");
     wrapper.addMethod(method, description.toString())
-        .setReturn(DataTypes.JS_INT, W_GETINTNN_RETURN_DESCR);
+        .setReturn(DataTypes.PY_INT, W_GETINTNN_RETURN_DESCR);
   }
 
   void createRangedMethod(Wrapper wrapper, int bits, String min, String max) {
@@ -1646,7 +1667,7 @@ static final String INITEXT_P3_DESCR = """
         "should be used with caution in cross-platform scenarios.</div>");
     }
     wrapper.addMethod(method, description.toString())
-        .addParameter("value", DataTypes.JS_INT, "Integer to be wrapped.")
+        .addParameter("value", DataTypes.PY_INT, "Integer to be wrapped.")
         .setReturn(DataTypes.CBOR_INT,
                    "Instantiated <a href='#wrapper.cbor.int'>CBOR.Int</a> object.");
   }
@@ -1698,7 +1719,7 @@ static final String INITEXT_P3_DESCR = """
         "0xffffffffffffffffffffffffffffffff");
 
     wrapper.addMethod("get_big_int", W_GETBIGINT_DESCR)
-        .setReturn(DataTypes.JS_INT, W_GETINTNN_RETURN_DESCR);
+        .setReturn(DataTypes.PY_INT, W_GETINTNN_RETURN_DESCR);
 
     createRangedMethod(wrapper, 8,
         "-0x80",
@@ -1751,104 +1772,104 @@ static final String INITEXT_P3_DESCR = """
     // CBOR.Int
 
     intMethods(addWrapper(DataTypes.CBOR_INT, W_INT_DESCR)
-        .addWrapperParameter("value", DataTypes.JS_INT, W_INT_P1_DESCR));
+        .addWrapperParameter("value", DataTypes.PY_INT, W_INT_P1_DESCR));
 
     // CBOR.Float
 
     addWrapper(DataTypes.CBOR_FLOAT, W_FLOAT_DESCR)
-        .addWrapperParameter("value", DataTypes.JS_FLOAT, W_FLOAT_P1_DESCR)
+        .addWrapperParameter("value", DataTypes.PY_FLOAT, W_FLOAT_P1_DESCR)
 
         .addMethod("get_float16", W_GETFLOAT_DESCR +
             "<div style='margin-top:0.5em'>" +
             "If the CBOR object is not a <code>float16</code> object, " +
             "a <a href='#main.errors'>CBOR.Exception</a> is thrown.</div>")
-        .setReturn(DataTypes.JS_FLOAT, W_GETFLOAT_RETURN_DESCR)
+        .setReturn(DataTypes.PY_FLOAT, W_GETFLOAT_RETURN_DESCR)
 
         .addMethod("get_float32", W_GETFLOAT_DESCR +
             "<div style='margin-top:0.5em'>" +
             "If the CBOR object is not a <code>float32</code> or <code>float16</code> object, " +
             "a <a href='#main.errors'>CBOR.Exception</a> is thrown.</div>")
-        .setReturn(DataTypes.JS_FLOAT, W_GETFLOAT_RETURN_DESCR)
+        .setReturn(DataTypes.PY_FLOAT, W_GETFLOAT_RETURN_DESCR)
 
         .addMethod("get_float64", W_GETFLOAT_DESCR + 
             "<div style='margin-top:0.5em'>" +
             "If the CBOR object is not a <code>float64</code>, <code>float32</code>, or <code>float16</code> object, " +
             "a <a href='#main.errors'>CBOR.Exception</a> is thrown.</div>")
-        .setReturn(DataTypes.JS_FLOAT, W_GETFLOAT_RETURN_DESCR)
+        .setReturn(DataTypes.PY_FLOAT, W_GETFLOAT_RETURN_DESCR)
 
         .addMethod("CBOR.Float.create_extended_float", W_CREEXTFLOAT_DESCR)
-        .addParameter("value", DataTypes.JS_FLOAT, W_CREEXTFLOAT_P1_DESCR)
+        .addParameter("value", DataTypes.PY_FLOAT, W_CREEXTFLOAT_P1_DESCR)
         .setReturn(DataTypes.CBOR_Any, W_CREEXTFLOAT_RETURN_DESCR)
 
         .addMethod("get_extended_float64", W_GETEXTFLOAT_DESCR)
-        .setReturn(DataTypes.JS_FLOAT, W_GETEXTFLOAT_RETURN_DESCR)
+        .setReturn(DataTypes.PY_FLOAT, W_GETEXTFLOAT_RETURN_DESCR)
         
         .addMethod("CBOR.Float.create_float16", W_CREFLOAT16_DESCR)
-        .addParameter("value", DataTypes.JS_FLOAT, W_CREFLOAT16_P1_DESCR)
+        .addParameter("value", DataTypes.PY_FLOAT, W_CREFLOAT16_P1_DESCR)
         .setReturn(DataTypes.CBOR_FLOAT, W_CREFLOAT16_RETURN_DESCR)
 
         .addMethod("CBOR.Float.create_float32", W_CREFLOAT32_DESCR)
-        .addParameter("value", DataTypes.JS_FLOAT, W_CREFLOAT32_P1_DESCR)
+        .addParameter("value", DataTypes.PY_FLOAT, W_CREFLOAT32_P1_DESCR)
         .setReturn(DataTypes.CBOR_FLOAT, W_CREFLOAT32_RETURN_DESCR)
 
-        .setProperty("length", DataTypes.JS_INT, W_FLOAT_PROP_DESCR);
+        .setProperty("length", DataTypes.PY_INT, W_FLOAT_PROP_DESCR);
 
     // CBOR.NonFinite
 
     addWrapper(DataTypes.CBOR_NONFIN, W_NONFIN_DESCR)
-        .addWrapperParameter("value", DataTypes.JS_INT, W_NONFIN_P1_DESCR)
+        .addWrapperParameter("value", DataTypes.PY_INT, W_NONFIN_P1_DESCR)
 
         .addMethod("get_non_finite", W_GET_NONFIN_DESCR)
-        .setReturn(DataTypes.JS_INT, W_GET_NONFIN_RETURN_DESCR)
+        .setReturn(DataTypes.PY_INT, W_GET_NONFIN_RETURN_DESCR)
 
         .addMethod("get_non_finite64", W_GET_NONFIN64_DESCR)
-        .setReturn(DataTypes.JS_INT, W_GET_NONFIN64_RETURN_DESCR)
+        .setReturn(DataTypes.PY_INT, W_GET_NONFIN64_RETURN_DESCR)
 
         .addMethod("is_nan", W_ISNAN_NONFIN_DESCR)
-        .setReturn(DataTypes.JS_BOOLEAN, W_ISNAN_NONFIN_RETURN_DESCR)
+        .setReturn(DataTypes.PY_BOOLEAN, W_ISNAN_NONFIN_RETURN_DESCR)
 
         .addMethod("is_simple", W_ISSIMPLE_NONFIN_DESCR)
-        .setReturn(DataTypes.JS_BOOLEAN, W_ISSIMPLE_NONFIN_RETURN_DESCR)
+        .setReturn(DataTypes.PY_BOOLEAN, W_ISSIMPLE_NONFIN_RETURN_DESCR)
 
         .addMethod("get_sign", W_GETSIGN_NONFIN_DESCR)
-        .setReturn(DataTypes.JS_BOOLEAN, W_GETSIGN_NONFIN_RETURN_DESCR)
+        .setReturn(DataTypes.PY_BOOLEAN, W_GETSIGN_NONFIN_RETURN_DESCR)
 
         .addMethod("set_sign", W_SETSIGN_NONFIN_DESCR)
-        .addParameter("sign", DataTypes.JS_BOOLEAN, W_SETSIGN_NONFIN_P1_DESCR)
-        .setReturn(DataTypes.JS_THIS, W_SETSIGN_NONFIN_RETURN_DESCR)
+        .addParameter("sign", DataTypes.PY_BOOLEAN, W_SETSIGN_NONFIN_P1_DESCR)
+        .setReturn(DataTypes.PY_THIS, W_SETSIGN_NONFIN_RETURN_DESCR)
 
         .addMethod("CBOR.NonFinite.create_payload", W_CREPAYLOAD_NONFIN_DESCR)
-        .addParameter("payload", DataTypes.JS_INT, W_CREPAYLOAD_NONFIN_P1_DESCR)
+        .addParameter("payload", DataTypes.PY_INT, W_CREPAYLOAD_NONFIN_P1_DESCR)
         .setReturn(DataTypes.CBOR_NONFIN, W_CREPAYLOAD_NONFIN_RETURN_DESCR)
 
         .addMethod("get_payload", W_GETPAYLOAD_NONFIN_DESCR)
-        .setReturn(DataTypes.JS_INT, W_GETPAYLOAD_NONFIN_RETURN_DESCR)
+        .setReturn(DataTypes.PY_INT, W_GETPAYLOAD_NONFIN_RETURN_DESCR)
 
-        .setProperty("length", DataTypes.JS_INT, W_FLOAT_PROP_DESCR);
+        .setProperty("length", DataTypes.PY_INT, W_FLOAT_PROP_DESCR);
     
     // CBOR.String
 
     addWrapper(DataTypes.CBOR_STRING, W_STRING_DESCR)
-        .addWrapperParameter("text_string", DataTypes.JS_STRING, W_STRING_P1_DESCR)
+        .addWrapperParameter("text_string", DataTypes.PY_STRING, W_STRING_P1_DESCR)
 
         .addMethod("get_string", W_GETSTRING_DESCR)
-        .setReturn(DataTypes.JS_STRING, W_GETSTRING_RETURN_DESCR);
+        .setReturn(DataTypes.PY_STRING, W_GETSTRING_RETURN_DESCR);
 
     // CBOR.Bytes
 
     addWrapper(DataTypes.CBOR_BYTES, W_BYTES_DESCR)
-        .addWrapperParameter("byte_string", DataTypes.JS_UINT8ARRAY, W_BYTES_P1_DESCR)
+        .addWrapperParameter("byte_string", DataTypes.PY_BYTES, W_BYTES_P1_DESCR)
 
         .addMethod("get_bytes", W_GETBYTES_DESCR)
-        .setReturn(DataTypes.JS_UINT8ARRAY, W_GETBYTES_RETURN_DESCR);
+        .setReturn(DataTypes.PY_BYTES, W_GETBYTES_RETURN_DESCR);
 
     // CBOR.Boolean
 
     addWrapper(DataTypes.CBOR_BOOLEAN, W_BOOLEAN_DESCR)
-        .addWrapperParameter("value", DataTypes.JS_BOOLEAN, W_BOOLEAN_P1_DESCR)
+        .addWrapperParameter("value", DataTypes.PY_BOOLEAN, W_BOOLEAN_P1_DESCR)
 
         .addMethod("get_boolean", W_GETBOOL_DESCR)
-        .setReturn(DataTypes.JS_BOOLEAN, W_GETBOOL_RETURN_DESCR);
+        .setReturn(DataTypes.PY_BOOLEAN, W_GETBOOL_RETURN_DESCR);
 
     // CBOR.Null
 
@@ -1860,33 +1881,33 @@ static final String INITEXT_P3_DESCR = """
 
         .addMethod("add", W_ARRAY_ADD_DESCR)
         .addParameter("object", DataTypes.CBOR_Any, W_ARRAY_ADD_P1_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
+        .setReturn(DataTypes.PY_THIS, CURRENT_RETURN_DESCR)
 
         .addMethod("get", W_ARRAY_GET_DESCR)
-        .addParameter("index", DataTypes.JS_INT, ARRAY_INDEX_P1_DESCR)
+        .addParameter("index", DataTypes.PY_INT, ARRAY_INDEX_P1_DESCR)
         .setReturn(DataTypes.CBOR_Any, W_ARRAY_GET_RETURN_DESCR)
 
         .addMethod("remove", W_ARRAY_REMOVE_DESCR)
-        .addParameter("index", DataTypes.JS_INT, ARRAY_INDEX_P1_DESCR)
+        .addParameter("index", DataTypes.PY_INT, ARRAY_INDEX_P1_DESCR)
         .setReturn(DataTypes.CBOR_Any, W_ARRAY_UPDATE_RETURN_DESCR)
 
         .addMethod("update", W_ARRAY_UPDATE_DESCR)
-        .addParameter("index", DataTypes.JS_INT, ARRAY_INDEX_P1_DESCR)
+        .addParameter("index", DataTypes.PY_INT, ARRAY_INDEX_P1_DESCR)
         .addParameter("object", DataTypes.CBOR_Any, W_ARRAY_UPDATE_P2_DESCR)
         .setReturn(DataTypes.CBOR_Any, W_ARRAY_UPDATE_RETURN_DESCR)
 
         .addMethod("insert", W_ARRAY_INSERT_DESCR)
-        .addParameter("index", DataTypes.JS_INT, ARRAY_INDEX_INSERT_P1_DESCR)
+        .addParameter("index", DataTypes.PY_INT, ARRAY_INDEX_INSERT_P1_DESCR)
         .addParameter("object", DataTypes.CBOR_Any, W_ARRAY_UPDATE_P2_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
+        .setReturn(DataTypes.PY_THIS, CURRENT_RETURN_DESCR)
 
         .addMethod("to_array", W_ARRAY_TOARR_DESCR)
-        .setReturn(DataTypes.JS_ARRAY, W_ARRAY_TOARR_RETURN_DESCR)
+        .setReturn(DataTypes.PY_ARRAY, W_ARRAY_TOARR_RETURN_DESCR)
 
         .addMethod("encode_as_sequence", W_ARRAY_ENC_AS_SEQ_DESCR)
-        .setReturn(DataTypes.JS_UINT8ARRAY, W_ARRAY_ENC_AS_SEQ_RETURN_DESCR)
+        .setReturn(DataTypes.PY_BYTES, W_ARRAY_ENC_AS_SEQ_RETURN_DESCR)
 
-        .setProperty("length", DataTypes.JS_INT, W_ARRAY_PROP_DESCR);
+        .setProperty("length", DataTypes.PY_INT, W_ARRAY_PROP_DESCR);
 
     // CBOR.Map
 
@@ -1895,7 +1916,7 @@ static final String INITEXT_P3_DESCR = """
         .addMethod("set", W_MAP_SET_DESCR)
         .addParameter("key", DataTypes.CBOR_Any, KEY_PARAMETER_DESCR)
         .addParameter("object", DataTypes.CBOR_Any, OBJECT_PARAMETER_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
+        .setReturn(DataTypes.PY_THIS, CURRENT_RETURN_DESCR)
 
 
         .addMethod("get", W_MAP_GET_DESCR)
@@ -1909,112 +1930,112 @@ static final String INITEXT_P3_DESCR = """
 
         .addMethod("contains_key", W_MAP_CONTAINS_DESCR)
         .addParameter("key", DataTypes.CBOR_Any, KEY_PARAMETER_DESCR)
-        .setReturn(DataTypes.JS_BOOLEAN, W_MAP_CONTAINS_RETURN_DESCR)
+        .setReturn(DataTypes.PY_BOOLEAN, W_MAP_CONTAINS_RETURN_DESCR)
 
         .addMethod("remove", W_MAP_REMOVE_DESCR)
         .addParameter("key", DataTypes.CBOR_Any, KEY_PARAMETER_DESCR)
         .setReturn(DataTypes.CBOR_Any, W_MAP_REMOVE_RETURN_DESCR)
 
         .addMethod("set_dynamic", W_MAP_SET_DYN_DESCR)
-        .addParameter("function", DataTypes.JS_DYNAMIC, W_MAP_SET_DYN_FUNC_PARAMETER_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
+        .addParameter("function", DataTypes.PY_DYNAMIC, W_MAP_SET_DYN_FUNC_PARAMETER_DESCR)
+        .setReturn(DataTypes.PY_THIS, CURRENT_RETURN_DESCR)
 
         .addMethod("merge", W_MAP_MERGE_DESCR)
         .addParameter("map", DataTypes.CBOR_MAP, W_MAP_MERGE_P1_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
+        .setReturn(DataTypes.PY_THIS, CURRENT_RETURN_DESCR)
 
         .addMethod("update", W_MAP_UPDATE_DESCR)
         .addParameter("key", DataTypes.CBOR_Any, KEY_PARAMETER_DESCR)
         .addParameter("object", DataTypes.CBOR_Any, OBJECT_PARAMETER_DESCR)
-        .addParameter("existing", DataTypes.JS_BOOLEAN, W_MAP_UPDATE_P3_DESCR)
+        .addParameter("existing", DataTypes.PY_BOOLEAN, W_MAP_UPDATE_P3_DESCR)
         .setReturn(DataTypes.CBOR_Any, W_MAP_UPDATE_RETURN_DESCR)
 
         .addMethod("get_keys", W_MAP_GETKEYS_DESCR)
-        .setReturn(DataTypes.JS_ARRAY, W_MAP_GETKEYS_RETURN_DESCR)
+        .setReturn(DataTypes.PY_ARRAY, W_MAP_GETKEYS_RETURN_DESCR)
 
         .addMethod("set_sorting_mode", W_MAP_SET_SORTING_MODE_DESCR)
-        .addParameter("pre_sorted_keys", DataTypes.JS_BOOLEAN, W_MAP_SET_SORTING_MODE_P1_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR)
+        .addParameter("pre_sorted_keys", DataTypes.PY_BOOLEAN, W_MAP_SET_SORTING_MODE_P1_DESCR)
+        .setReturn(DataTypes.PY_THIS, CURRENT_RETURN_DESCR)
 
-        .setProperty("length", DataTypes.JS_INT, W_MAP_PROP_DESCR);
+        .setProperty("length", DataTypes.PY_INT, W_MAP_PROP_DESCR);
 
     // CBOR.Tag
 
     addWrapper(DataTypes.CBOR_TAG, W_TAG_DESCR)
-        .addWrapperParameter("tag_number", DataTypes.JS_INT, W_TAG_P1_DESCR)
+        .addWrapperParameter("tag_number", DataTypes.PY_INT, W_TAG_P1_DESCR)
         .addWrapperParameter("object", DataTypes.CBOR_Any, W_TAG_P2_DESCR)
 
         .addMethod("get_tag_number", W_TAG_GETNUM_DESCR)
-        .setReturn(DataTypes.JS_INT, W_TAG_GETNUM_RETURN_DESCR)
+        .setReturn(DataTypes.PY_INT, W_TAG_GETNUM_RETURN_DESCR)
 
         .addMethod("get", W_TAG_GET_DESCR)
         .setReturn(DataTypes.CBOR_Any, W_TAG_GET_RETURN_DESCR)
 
-        .setProperty("cotx_id", DataTypes.JS_STRING, W_TAG_PROP_COTX_ID_DESCR)
+        .setProperty("cotx_id", DataTypes.PY_STRING, W_TAG_PROP_COTX_ID_DESCR)
         .setProperty("cotx_object", DataTypes.CBOR_Any, W_TAG_PROP_COTX_OBJECT_DESCR);
 
     // CBOR.Simple
 
     addWrapper(DataTypes.CBOR_SIMPLE, W_SIMPLE_DESCR)
-        .addWrapperParameter("value", DataTypes.JS_INT, W_SIMPLE_PARAM_DESCR)
+        .addWrapperParameter("value", DataTypes.PY_INT, W_SIMPLE_PARAM_DESCR)
 
         .addMethod("get_simple", W_SIMPLE_GETVAL_DESCR)
-        .setReturn(DataTypes.JS_INT, W_SIMPLE_GETVAL_RETURN_DESCR);
+        .setReturn(DataTypes.PY_INT, W_SIMPLE_GETVAL_RETURN_DESCR);
 
     // Time
 
     addTimeMethod("get_date_time", W_GETDATETIME_DESCR)
-        .setReturn(DataTypes.JS_DATE, W_GETDATETIME_RETURN_DESCR);
+        .setReturn(DataTypes.PY_DATE, W_GETDATETIME_RETURN_DESCR);
 
     addTimeMethod("get_epoch_time", W_GETEPOCHTIME_DESCR)
-        .setReturn(DataTypes.JS_DATE, W_GETEPOCHTIME_RETURN_DESCR);
+        .setReturn(DataTypes.PY_DATE, W_GETEPOCHTIME_RETURN_DESCR);
 
     // Common
 
     addCommonMethod("encode", ENCODE_DESCR)
-        .setReturn(DataTypes.JS_UINT8ARRAY, ENCODE_RETURN_DESCR);
+        .setReturn(DataTypes.PY_BYTES, ENCODE_RETURN_DESCR);
 
     addCommonMethod("clone", CLONE_DESCR)
         .setReturn(DataTypes.CBOR_Any, CLONE_RETURN_DESCR);
 
     addCommonMethod("equals", EQUALS_DESCR)
         .addParameter("object", DataTypes.CBOR_Any, EQUALS_P1_DESCR)
-        .setReturn(DataTypes.JS_BOOLEAN, EQUALS_RETURN_DESCR);
+        .setReturn(DataTypes.PY_BOOLEAN, EQUALS_RETURN_DESCR);
 
     addCommonMethod("to_diagnostic", TODIAG_DESCR)
-        .addParameter("pretty_print", DataTypes.JS_BOOLEAN, TODIAG_P1_DESCR)
-        .setReturn(DataTypes.JS_STRING, TODIAG_RETURN_DESCR);
+        .addParameter("pretty_print", DataTypes.PY_BOOLEAN, TODIAG_P1_DESCR)
+        .setReturn(DataTypes.PY_STRING, TODIAG_RETURN_DESCR);
 
     addCommonMethod("to_string", TOSTRING_DESCR)
-        .setReturn(DataTypes.JS_STRING, TODIAG_RETURN_DESCR);
+        .setReturn(DataTypes.PY_STRING, TODIAG_RETURN_DESCR);
 
     addCommonMethod("is_null", ISNULL_DESCR)
-        .setReturn(DataTypes.JS_BOOLEAN, ISNULL_RETURN_DESCR);
+        .setReturn(DataTypes.PY_BOOLEAN, ISNULL_RETURN_DESCR);
 
     addCommonMethod("check_for_unread", CHECK4_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR);
+        .setReturn(DataTypes.PY_THIS, CURRENT_RETURN_DESCR);
 
     addCommonMethod("scan", SCAN_DESCR)
-        .setReturn(DataTypes.JS_THIS, CURRENT_RETURN_DESCR);
+        .setReturn(DataTypes.PY_THIS, CURRENT_RETURN_DESCR);
 
     // CBOR.decode()
 
     addDecoderMethod("CBOR.decode", DECODE_DESCR)
-        .addParameter("cbor", DataTypes.JS_UINT8ARRAY, DECODE_P1_DESCR)
+        .addParameter("cbor", DataTypes.PY_BYTES, DECODE_P1_DESCR)
         .setReturn(DataTypes.CBOR_Any, DECODE_RETURN_DESCR);
 
     // CBOR.init_decoder()
 
     addDecoderMethod("CBOR.init_decoder", INITEXT_DESCR)
-        .addParameter("cbor_stream", DataTypes.JS_STREAM, INITEXT_P1_DESCR)
-        .addParameter("options", DataTypes.JS_INT, INITEXT_P2_DESCR)
-        .addParameter("max_length", DataTypes.JS_INT, INITEXT_P3_DESCR)
+        .addParameter("cbor_stream", DataTypes.PY_STREAM, INITEXT_P1_DESCR)
+        .addParameter("options", DataTypes.PY_INT, INITEXT_P2_DESCR)
+        .addParameter("max_length", DataTypes.PY_INT, INITEXT_P3_DESCR)
         .setReturn(DataTypes.ExtendedDecoder, INITEXT_RETURN_DESCR);
     
     // Decoder.set_max_nesting_level()
 
     addDecoderMethod("<i>Decoder</i>.set_max_nesting_level", SETMAXNESTINGLEVEL_DESCR)
-        .addParameter("maxLevel", DataTypes.JS_INT, SETMAXNESTINGLEVEL_P1_DESCR)
+        .addParameter("max_level", DataTypes.PY_INT, SETMAXNESTINGLEVEL_P1_DESCR)
         .setReturn(DataTypes.ExtendedDecoder, INITEXT_RETURN_DESCR);
 
     // Decoder.decode_with_options()
@@ -2025,34 +2046,41 @@ static final String INITEXT_P3_DESCR = """
     // Decoder.get_byte_count()
 
     addDecoderMethod("<i>Decoder</i>.get_byte_count", get_byte_count_DESCR)
-        .setReturn(DataTypes.JS_INT, get_byte_count_RETURN_DESCR);
+        .setReturn(DataTypes.PY_INT, get_byte_count_RETURN_DESCR);
 
     // CBOR.from_diagnostic()
 
     addDecoderMethod("CBOR.from_diagnostic", DIAGDEC_DESCR)
-        .addParameter("cbor_text", DataTypes.JS_STRING, DIAGDEC_P1_DESCR)
+        .addParameter("cbor_text", DataTypes.PY_STRING, DIAGDEC_P1_DESCR)
         .setReturn(DataTypes.CBOR_Any, DIAGDEC_RETURN_DESCR);
 
     // CBOR.from_diagnostic_seq()
 
     addDecoderMethod("CBOR.from_diagnostic_seq", DIAGDECSEQ_DESCR)
-        .addParameter("cbor_text", DataTypes.JS_STRING, DIAGDECSEQ_P1_DESCR)
-        .setReturn(DataTypes.JS_ARRAY, DIAGDECSEQ_RETURN_DESCR);
+        .addParameter("cbor_text", DataTypes.PY_STRING, DIAGDECSEQ_P1_DESCR)
+        .setReturn(DataTypes.PY_ARRAY, DIAGDECSEQ_RETURN_DESCR);
 
      // CBOR.create_date_time()
 
     addUtilityMethod("CBOR.create_date_time", CREATE_DATETIME_DESCR)
-        .addParameter("instant", DataTypes.JS_DATE, CREATE_TIME_P_DATE)
-        .addParameter("millis", DataTypes.JS_BOOLEAN, CREATE_TIME_P_MILLIS)
-        .addParameter("utc", DataTypes.JS_BOOLEAN, CREATE_TIME_P_UTC)
+        .addParameter("instant", DataTypes.PY_DATE, CREATE_TIME_P_DATE)
+        .addParameter("millis", DataTypes.PY_BOOLEAN, CREATE_TIME_P_MILLIS)
+        .addParameter("utc", DataTypes.PY_BOOLEAN, CREATE_TIME_P_UTC)
         .setReturn(DataTypes.CBOR_STRING, CREATE_DATETIME_RETURN_DESCR);
 
      // CBOR.create_epoch_time()
 
     addUtilityMethod("CBOR.create_epoch_time", CREATE_EPOCHTIME_DESCR)
-        .addParameter("instant", DataTypes.JS_DATE, CREATE_TIME_P_DATE)
-        .addParameter("millis", DataTypes.JS_BOOLEAN, CREATE_TIME_P_MILLIS)
+        .addParameter("instant", DataTypes.PY_DATE, CREATE_TIME_P_DATE)
+        .addParameter("millis", DataTypes.PY_BOOLEAN, CREATE_TIME_P_MILLIS)
         .setReturn(DataTypes.CBOR_Any, CREATE_EPOCHTIME_RETURN_DESCR);
+
+    // CBOR.create_cotx_tag()
+
+    addUtilityMethod("CBOR.create_cotx_tag", CREATE_COTX_TAG_DESCR)
+        .addParameter("id", DataTypes.PY_STRING, CREATE_COTX_TAG_P_ID)
+        .addParameter("object", DataTypes.CBOR_Any, CREATE_COTX_TAG_P_OBJECT)
+        .setReturn(DataTypes.CBOR_TAG, CREATE_COTX_TAG_RETURN_DESCR);
 
     replace(INTRO, printMainHeader("intro", "Introduction"));
     outline.increment();

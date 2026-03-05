@@ -156,6 +156,7 @@
 <div style='margin:0 0 0.4em 2em'><img alt='n/a' src='closed.svg' onclick='tocSwitch(this)' style='height:1em;margin-right:1em;cursor:pointer'><a href='#main.utility'>6.&nbsp;&nbsp;Utility Methods</a></div><div style='display:none'>
 <div style='margin:0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#utility.cbor.createdatetime'>6.1.&nbsp;&nbsp;CBOR.create_date_time()</a></div>
 <div style='margin:0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#utility.cbor.createepochtime'>6.2.&nbsp;&nbsp;CBOR.create_epoch_time()</a></div>
+<div style='margin:0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#utility.cbor.createcotxtag'>6.3.&nbsp;&nbsp;CBOR.create_cotx_tag()</a></div>
 </div>
 <div style='margin:0 0 0.4em 2em'><img alt='n/a' src='closed.svg' onclick='tocSwitch(this)' style='height:1em;margin-right:1em;cursor:pointer'><a href='#main.numbers'>7.&nbsp;&nbsp;CBOR Numbers</a></div><div style='display:none'>
 <div style='margin:0 0 0.4em 4em'><img alt='n/a' src='empty.svg' style='height:1em;margin-right:1em'><a href='#numbers.integers'>7.1.&nbsp;&nbsp;Integers</a></div>
@@ -561,7 +562,7 @@ See also <a href='#numbers.integers'>Integer Numbers</a>.</div></td></tr>
 <tr><th>Syntax</th><td colspan='2' style='width:100%'><kbd>CBOR.Float(<i>value</i>)</kbd></td></tr>
 <tr><th>Description</th><td colspan='2' style='width:100%'>Constructor.  Creates a CBOR <code>float</code> object.
 <div style='margin-top:0.5em'>
-See also <a href='#jsnumbers.fp'>Floating-Point Numbers</a>.</div>
+See also <a href='#numbers.floating-point'>Floating-Point Numbers</a>.</div>
 <div style='margin-top:0.5em'>
 For supporting <code>NaN</code> and <code>Infinity</code>, see
 <a href='non-finite-numbers.html'>Non-Finite Numbers</a>.</div></td></tr>
@@ -984,7 +985,7 @@ is equal to <code>length</code>, <kbd><i>object</i></kbd> is <i>appended</i>.</d
 <tr><th>Description</th><td style='width:100%'>Copy array.</td></tr>
 <tr><td colspan='2' class='webpkidiv'></td></tr>
 <tr><th>Returns</th><th>Description</th></tr>
-<tr><td style='text-align:center'><kbd>[CBOR.<i>Wrapper</i>...]</kbd></td><td style='width:100%'>JavaScript array holding a copy of current <kbd>CBOR.<i>Wrapper</i></kbd> objects.</td></tr>
+<tr><td style='text-align:center'><kbd>[CBOR.<i>Wrapper</i>...]</kbd></td><td style='width:100%'>Array holding a copy of current <kbd>CBOR.<i>Wrapper</i></kbd> objects.</td></tr>
 </table></div>
 <h4 id='cbor.array.encodeassequence'>2.8.1.7.&nbsp;&nbsp;encode_as_sequence()</h4>
 <div class='webpkifloat'>
@@ -1151,7 +1152,7 @@ a <code>map</code> entry will be created for <kbd><i>key</i></kbd> if not alread
 <tr><th>Description</th><td style='width:100%'>Get map keys.</td></tr>
 <tr><td colspan='2' class='webpkidiv'></td></tr>
 <tr><th>Returns</th><th>Description</th></tr>
-<tr><td style='text-align:center'><kbd>[CBOR.<i>Wrapper</i>...]</kbd></td><td style='width:100%'>JavaScript array holding a copy of current key objects.</td></tr>
+<tr><td style='text-align:center'><kbd>[CBOR.<i>Wrapper</i>...]</kbd></td><td style='width:100%'>Array holding a copy of current key objects.</td></tr>
 </table></div>
 <h4 id='cbor.map.setsortingmode'>2.9.1.10.&nbsp;&nbsp;set_sorting_mode()</h4>
 <div class='webpkifloat'>
@@ -1232,7 +1233,7 @@ and tag&nbsp;<code>1010</code> <span style='white-space:nowrap'>[<a href='https:
 <tr><td style='text-align:center'><kbd><i>cotx_id</i></kbd></td><td style='text-align:center'><kbd>str</kbd></td><td style='width:100%'>COTX <span style='white-space:nowrap'>[<a href='https://datatracker.ietf.org/doc/draft-rundgren-cotx/' title='COTX'>COTX<img src='xtl.svg' alt='link'></a>]</span> support:
 object ID string.<div style='margin-top:0.5em'>
 Only valid for COTX tags.
-See also <a href='#cbor.tag.gettagnumber'>get_tag_number()</a>.</div></td></tr>
+See also <a href='#utility.cbor.createcotxtag'>CBOR.create_cotx_tag()</a>.</div></td></tr>
 </table></div>
 <h4 id='cbor.tag.cotxobject'>2.10.2.2.&nbsp;&nbsp;cotx_object</h4>
 <div class='webpkifloat'>
@@ -1241,7 +1242,7 @@ See also <a href='#cbor.tag.gettagnumber'>get_tag_number()</a>.</div></td></tr>
 <tr><td style='text-align:center'><kbd><i>cotx_object</i></kbd></td><td style='text-align:center'><kbd>CBOR.<i>Wrapper</i></kbd></td><td style='width:100%'>COTX <span style='white-space:nowrap'>[<a href='https://datatracker.ietf.org/doc/draft-rundgren-cotx/' title='COTX'>COTX<img src='xtl.svg' alt='link'></a>]</span> support:
 wrapped object.<div style='margin-top:0.5em'>
 Only valid for COTX tags.
-See also <a href='#cbor.tag.gettagnumber'>get_tag_number()</a>.</div></td></tr>
+See also <a href='#utility.cbor.createcotxtag'>CBOR.create_cotx_tag()</a>.</div></td></tr>
 </table></div>
 <h4 id='wrapper.cbor.simple'>2.11.&nbsp;&nbsp;CBOR.Simple</h4>
 <div class='webpkifloat'>
@@ -1289,7 +1290,8 @@ in CBOR maps.</div></td></tr>
 <div style='margin-top:0.5em'>
 This method performs a
 <a href='#cbor.string.getstring'>get_string()</a>.
-The returned string is subsequently used for initiating a JavaScript <kbd>Date</kbd> object.</div>
+The returned string is subsequently used for initiating a
+Python <kbd>datetime</kbd> object.</div>
 <div style='margin-top:0.5em'>
 If not <i>all</i> of the following conditions are met, a
 <a href='#main.errors'>CBOR.Exception</a> is thrown:
@@ -1307,7 +1309,7 @@ in section&nbsp;5.6 of <span style='white-space:nowrap'>[<a href='https://www.rf
 See also <a href='#utility.cbor.createdatetime'>CBOR.create_date_time()</a>.</div></td></tr>
 <tr><td colspan='2' class='webpkidiv'></td></tr>
 <tr><th>Returns</th><th>Description</th></tr>
-<tr><td style='text-align:center'><kbd>timestamp</kbd></td><td style='width:100%'>Date object</td></tr>
+<tr><td style='text-align:center'><kbd>datetime</kbd></td><td style='width:100%'>Date object</td></tr>
 </table></div>
 <h4 id='time.getepochtime'>3.2.&nbsp;&nbsp;get_epoch_time()</h4>
 <div class='webpkifloat'>
@@ -1318,7 +1320,8 @@ See also <a href='#utility.cbor.createdatetime'>CBOR.create_date_time()</a>.</di
 Depending on the type of the current object, this method performs a
 <a href='#cbor.int.getint53'>get_int53()</a> or a
 <a href='#cbor.float.getfloat64'>get_float64()</a>.
-The returned number is subsequently used for initiating a JavaScript <kbd>Date</kbd> object.</div>
+The returned number is subsequently used for initiating a
+Python <kbd>datetime</kbd> object.</div>
 <div style='margin-top:0.5em'>
 If not <i>all</i> of the following conditions are met, a <a href='#main.errors'>CBOR.Exception</a> is thrown:
 <ul style='padding:0;margin:0 0 0.5em 1.2em'>
@@ -1334,7 +1337,7 @@ is a <a href='#wrapper.cbor.int'>CBOR.Int</a> or
 See also <a href='#utility.cbor.createepochtime'>CBOR.create_epoch_time()</a>.</div></td></tr>
 <tr><td colspan='2' class='webpkidiv'></td></tr>
 <tr><th>Returns</th><th>Description</th></tr>
-<tr><td style='text-align:center'><kbd>timestamp</kbd></td><td style='width:100%'>Date object</td></tr>
+<tr><td style='text-align:center'><kbd>datetime</kbd></td><td style='width:100%'>Date object</td></tr>
 </table></div>
 
   <h3 id='main.common'>4.&nbsp;&nbsp;Common Wrapper Methods</h3>
@@ -1368,7 +1371,14 @@ with the original CBOR content.</td></tr>
 <div class='webpkifloat'>
 <table class='webpkitable' style='margin-left:2em;width:50em'>
 <tr><th>Syntax</th><td colspan='2' style='width:100%'><kbd>equals(<i>object</i>)</kbd></td></tr>
-<tr><th>Description</th><td colspan='2' style='width:100%'>Compare <kbd>self</kbd> with another CBOR object.<div style='margin-top:0.5em'>The result is <code>True</code> if and only if <kbd>object</kbd> is not <code>None</code> and is a <kbd>CBOR.<i>Wrapper</i></kbd>, and the associated binary encodings (as provided by <a href='#common.encode'>encode()</a>) are equivalent.</div></td></tr>
+<tr><th>Description</th><td colspan='2' style='width:100%'>Compare <kbd>self</kbd> with another CBOR object.
+<div style='margin-top:0.5em'>
+The result is <code>True</code> if and only if <kbd>object</kbd> is not
+ <code>None</code> and is a <kbd>CBOR.<i>Wrapper</i></kbd>, and the associated binary encodings
+ (as provided by <a href='#common.encode'>encode()</a>) are equivalent.</div>
+<div style='margin-top:0.5em'>
+Note that <code>equals()</code> is equivalent to the
+Python '<code>==</code>' operator.</div></td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
 <tr><td style='text-align:center'><kbd><i>object</i></kbd></td><td style='text-align:center'><kbd>CBOR.<i>Wrapper</i></kbd></td><td style='width:100%'>Argument to compare with.</td></tr>
@@ -1480,7 +1490,9 @@ This is only meaningful in conjunction with
 <tr><th>Description</th><td colspan='2' style='width:100%'>Decode (aka &quot;deserialize&quot;) CBOR object.
 <div style='margin-top:0.5em'>This method is equivalent to:</div>
 <div style='margin:0.3em 0 0.5em 1.2em'>
-<code style='white-space:nowrap'>CBOR.init_decoder(<i>cbor</i>, 0).decode_with_options()</code></div>
+<code style='white-space:nowrap'>import io<br><br>
+CBOR.init_decoder(io.BytesIO(<i>cbor</i>), 0,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;len(<i>cbor</i>)).decode_with_options()</code></div>
 Unsupported or malformed CBOR data cause a <a href='#main.errors'>CBOR.Exception</a> to be thrown.</td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
@@ -1550,7 +1562,7 @@ and <code>float</code> objects, only limited by <span style='white-space:nowrap'
 <h4 id='decoder.decoder.setmaxnestinglevel'>5.3.&nbsp;&nbsp;<i>Decoder</i>.set_max_nesting_level()</h4>
 <div class='webpkifloat'>
 <table class='webpkitable' style='margin-left:2em;width:50em'>
-<tr><th>Syntax</th><td colspan='2' style='width:100%'><kbd><i>Decoder</i>.set_max_nesting_level(<i>maxLevel</i>)</kbd></td></tr>
+<tr><th>Syntax</th><td colspan='2' style='width:100%'><kbd><i>Decoder</i>.set_max_nesting_level(<i>max_level</i>)</kbd></td></tr>
 <tr><th>Description</th><td colspan='2' style='width:100%'>Set max structure nesting level.
 <div style='margin-top:0.5em'>
 Structure refers to CBOR tags, arrays, and maps.
@@ -1563,7 +1575,7 @@ Usage in code:</div>
 &nbsp;&nbsp;.decode_with_options()</code></div></td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-<tr><td style='text-align:center'><kbd><i>maxLevel</i></kbd></td><td style='text-align:center'><kbd>int</kbd></td><td style='width:100%'>Maximum nesting level.  The default setting is <code>100</code>.</td></tr>
+<tr><td style='text-align:center'><kbd><i>max_level</i></kbd></td><td style='text-align:center'><kbd>int</kbd></td><td style='width:100%'>Maximum nesting level.  The default setting is <code>100</code>.</td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Returns</th><th colspan='2'>Description</th></tr>
 <tr><td style='text-align:center'><kbd><i>Decoder</i></kbd></td><td colspan='2' style='width:100%'>Decoder object to be used with
@@ -1622,7 +1634,7 @@ character (<kbd>','</kbd>) as a separator.
 <tr><td style='text-align:center'><kbd><i>cbor_text</i></kbd></td><td style='text-align:center'><kbd>str</kbd></td><td style='width:100%'>CBOR in textual format.</td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Returns</th><th colspan='2'>Description</th></tr>
-<tr><td style='text-align:center'><kbd>[CBOR.<i>Wrapper</i>...]</kbd></td><td colspan='2' style='width:100%'>JavaScript array holding zero or more objects.</td></tr>
+<tr><td style='text-align:center'><kbd>[CBOR.<i>Wrapper</i>...]</kbd></td><td colspan='2' style='width:100%'>Array holding zero or more objects.</td></tr>
 </table></div>
 
   <h3 id='main.utility'>6.&nbsp;&nbsp;Utility Methods</h3>
@@ -1656,7 +1668,7 @@ print(date_time.to_string())&nbsp;&nbsp;# Diagnostic notation<br>
 See also <a href='#time.getdatetime'>get_date_time()</a>.</div></td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-<tr><td style='text-align:center'><kbd><i>instant</i></kbd></td><td style='text-align:center'><kbd>timestamp</kbd></td><td style='width:100%'>Time source object.</td></tr>
+<tr><td style='text-align:center'><kbd><i>instant</i></kbd></td><td style='text-align:center'><kbd>datetime</kbd></td><td style='width:100%'>Time source object.</td></tr>
 <tr><td style='text-align:center'><kbd><i>millis</i></kbd></td><td style='text-align:center'><kbd>bool</kbd></td><td style='width:100%'>If <kbd><i>millis</i></kbd> is <code>True</code>,
 the milliseconds of the <kbd><i>instant</i></kbd> object will be
 featured in the created time object.  Note: if the millisecond
@@ -1700,7 +1712,7 @@ print(epoch.to_string())&nbsp;&nbsp;# Diagnostic notation<br>
 See also <a href='#time.getepochtime'>get_epoch_time()</a>.</div></td></tr>
 <tr><td colspan='3' class='webpkidiv'></td></tr>
 <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-<tr><td style='text-align:center'><kbd><i>instant</i></kbd></td><td style='text-align:center'><kbd>timestamp</kbd></td><td style='width:100%'>Time source object.</td></tr>
+<tr><td style='text-align:center'><kbd><i>instant</i></kbd></td><td style='text-align:center'><kbd>datetime</kbd></td><td style='width:100%'>Time source object.</td></tr>
 <tr><td style='text-align:center'><kbd><i>millis</i></kbd></td><td style='text-align:center'><kbd>bool</kbd></td><td style='width:100%'>If <kbd><i>millis</i></kbd> is <code>True</code>,
 the milliseconds of the <kbd><i>instant</i></kbd> object will be
 featured in the created time object.  Note: if the millisecond
@@ -1714,10 +1726,23 @@ add a second to the created time object.</div></td></tr>
 <tr><th>Returns</th><th colspan='2'>Description</th></tr>
 <tr><td style='text-align:center'><kbd>CBOR.<i>Wrapper</i></kbd></td><td colspan='2' style='width:100%'>Wrapper holding an <code>EpochTime</code> object.</td></tr>
 </table></div>
+<h4 id='utility.cbor.createcotxtag'>6.3.&nbsp;&nbsp;CBOR.create_cotx_tag()</h4>
+<div class='webpkifloat'>
+<table class='webpkitable' style='margin-left:2em;width:50em'>
+<tr><th>Syntax</th><td colspan='2' style='width:100%'><kbd>CBOR.create_cotx_tag(<i>id</i>, <i>object</i>)</kbd></td></tr>
+<tr><th>Description</th><td colspan='2' style='width:100%'>Conveniance method for creating a <span style='white-space:nowrap'>[<a href='https://datatracker.ietf.org/doc/draft-rundgren-cotx/' title='COTX'>COTX<img src='xtl.svg' alt='link'></a>]</span> compatible tag.</td></tr>
+<tr><td colspan='3' class='webpkidiv'></td></tr>
+<tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+<tr><td style='text-align:center'><kbd><i>id</i></kbd></td><td style='text-align:center'><kbd>str</kbd></td><td style='width:100%'>URL or other suitable identfier.</td></tr>
+<tr><td style='text-align:center'><kbd><i>object</i></kbd></td><td style='text-align:center'><kbd>CBOR.<i>Wrapper</i></kbd></td><td style='width:100%'>Tagged object.</td></tr>
+<tr><td colspan='3' class='webpkidiv'></td></tr>
+<tr><th>Returns</th><th colspan='2'>Description</th></tr>
+<tr><td style='text-align:center'><kbd>CBOR.Tag</kbd></td><td colspan='2' style='width:100%'>Wrapper holding a <code>COTX</code> object.</td></tr>
+</table></div>
 
   <h3 id='main.numbers'>7.&nbsp;&nbsp;CBOR Numbers</h3>
 
-<div id='jsnumbers.int'></div><h4 id='numbers.integers'>7.1.&nbsp;&nbsp;Integers</h4>
+<h4 id='numbers.integers'>7.1.&nbsp;&nbsp;Integers</h4>
 
 The following table holds additional CDDL defintions <span style='white-space:nowrap'>[<a href='https://www.ietf.org/archive/id/draft-rundgren-cbor-core-25.html#name-additional-cddl-types' title='CDDL-EXT'>CDDL-EXT<img src='xtl.svg' alt='link'></a>]</span>
 and their API counterparts:

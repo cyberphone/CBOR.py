@@ -22,4 +22,6 @@ assert_true("objectId", t.cotx_id == "uri")
 assert_true("Object", t.cotx_object.get(0).to_string() == "{}")
 t.check_for_unread()
 
+assert_true("cotx", t == CBOR.create_cotx_tag("uri", CBOR.Array().add(CBOR.Map())))
+
 success()

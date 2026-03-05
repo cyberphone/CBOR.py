@@ -1751,7 +1751,7 @@ class CBOR:
     
 
     #================================#
-    #      CBOR. Public Methods      #
+    #   CBOR Public Static Methods   #
     #================================#
 
    ###################################
@@ -1817,6 +1817,13 @@ class CBOR:
                 local, math.floor(diff / 3600), math.floor(diff % 3600))
         return CBOR.String(iso_string)
     
+    ####################################
+    #      CBOR.create_cotx_tag()      #
+    ####################################
+    @staticmethod
+    def create_cotx_tag(id, object):
+        return CBOR.Tag(CBOR.Tag.TAG_COTX,
+            CBOR.Array().add(CBOR.String(id)).add(object))
         
     #================================#
     #    Internal Support Methods    #
