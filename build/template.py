@@ -3,6 +3,7 @@ import math
 import struct
 import io
 from datetime import datetime, timezone
+import platform
 
 def assert_true(text, expression):
   if not expression:
