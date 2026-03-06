@@ -48,6 +48,7 @@ public class BuildSystem {
     addFile("clone.py");
     addFile("cotx.py");
     addFile("miscellaneous.py");
+    addFile("exceptions.py");
     addFile("nesting.py");
     addFile("base64url.py");
     addFile("xyz-encoder.py");

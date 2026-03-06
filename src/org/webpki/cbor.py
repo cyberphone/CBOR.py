@@ -1802,17 +1802,17 @@ class CBOR:
 
     @staticmethod
     def create_date_time(instant, millis, utc):
-        epoc = CBOR._check_time_parameters(instant, millis, utc)
+        epoch = CBOR._check_time_parameters(instant, millis, utc)
         if utc:
             iso_string = datetime.datetime.fromtimestamp(
-                epoc, datetime.UTC).isoformat()
+                epoch, datetime.UTC).isoformat()
             if (i := iso_string.find("+00:00")) > 0 or \
                (i := iso_string.find("Z")) > 0:
                 iso_string = CBOR._remove_trailing_zeros(iso_string[0:i]) + "Z"
             else: CBOR._error("Internal error: " + iso_string)
         else:
             iso_string = datetime.datetime.fromtimestamp(
-                epoc, datetime.UTC).astimezone().isoformat()
+                epoch, datetime.UTC).astimezone().isoformat()
             i = len(iso_string) - 6
             iso_string = \
                 CBOR._remove_trailing_zeros(iso_string[0:i]) + iso_string[i:]

@@ -2,6 +2,7 @@ from org.webpki.cbor import CBOR
 import math
 import struct
 import io
+import datetime
 
 def assert_true(text, expression):
   if not expression:
