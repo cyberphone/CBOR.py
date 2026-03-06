@@ -14,7 +14,7 @@ import struct
 import math
 import io
 import base64
-import datetime
+from datetime import datetime, timezone
 import re
 
 class CBOR:
@@ -187,16 +187,16 @@ class CBOR:
             match = re.search(r"^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})" +
                               r"(\.\d{1,9})?((\-|\+)\d{2}:\d{2}|Z)$", iso)
             if match:
-                instant = datetime.datetime.fromisoformat(iso)
-                CBOR._check_time_range(datetime.datetime.timestamp(instant))
+                instant = datetime.fromisoformat(iso)
+                CBOR._check_time_range(datetime.timestamp(instant))
                 return instant
             CBOR._error("Invalid ISO format: \"{:s}\"".format(iso))
 
         def get_epoch_time(self):
-            return datetime.datetime.fromtimestamp(CBOR._check_time_range(
+            return datetime.fromtimestamp(CBOR._check_time_range(
                 float(self.get_int53()) if isinstance(self, CBOR.Int) 
                                         else self.get_float64()),
-                                                   datetime.UTC)
+                                                   timezone.utc)
                 
         def get_bytes(self):
             return self._check_type_get_value('Bytes')
@@ -1804,15 +1804,15 @@ class CBOR:
     def create_date_time(instant, millis, utc):
         epoch = CBOR._check_time_parameters(instant, millis, utc)
         if utc:
-            iso_string = datetime.datetime.fromtimestamp(
-                epoch, datetime.UTC).isoformat()
+            iso_string = datetime.fromtimestamp(
+                epoch, timezone.utc).isoformat()
             if (i := iso_string.find("+00:00")) > 0 or \
                (i := iso_string.find("Z")) > 0:
                 iso_string = CBOR._remove_trailing_zeros(iso_string[0:i]) + "Z"
             else: CBOR._error("Internal error: " + iso_string)
         else:
-            iso_string = datetime.datetime.fromtimestamp(
-                epoch, datetime.UTC).astimezone().isoformat()
+            iso_string = datetime.fromtimestamp(
+                epoch, timezone.utc).astimezone().isoformat()
             i = len(iso_string) - 6
             iso_string = \
                 CBOR._remove_trailing_zeros(iso_string[0:i]) + iso_string[i:]
@@ -2031,7 +2031,7 @@ class CBOR:
         CBOR._check_argument_type(instant, "datetime")
         CBOR._check_bool_argument(millis)
         CBOR._check_bool_argument(utc)
-        timestamp = datetime.datetime.timestamp(instant)
+        timestamp = datetime.timestamp(instant)
         if isinstance(timestamp, float):
             """
             For interoperability purposes, time objects are limitited

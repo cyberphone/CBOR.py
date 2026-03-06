@@ -2,7 +2,7 @@ from org.webpki.cbor import CBOR
 import math
 import struct
 import io
-import datetime
+from datetime import datetime, timezone
 
 def assert_true(text, expression):
   if not expression:

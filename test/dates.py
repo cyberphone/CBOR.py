@@ -1,7 +1,7 @@
 # Testing datetime and epoch methods
 from org.webpki.cbor import CBOR
 from assertions import assert_true, assert_false, fail, success, check_exception
-import datetime
+from datetime import datetime, timezone
 
 def one_get_date_time(epoch, isoString):
   assert_true("date1", CBOR.String(isoString).get_date_time().timestamp() == epoch)
@@ -35,16 +35,17 @@ one_get_date_time(           0.000, "1970-01-01T00:00:00Z")
 one_get_date_time(253402300799.000, "9999-12-31T23:59:59Z")
 
 def one_create_date_time(epoch, millis, utc):
-  instant = datetime.datetime.fromtimestamp(epoch, datetime.UTC)
+  instant = datetime.fromtimestamp(epoch, timezone.utc)
   assert_true("now/date_time", 
     CBOR.create_date_time(instant, millis, utc).get_date_time().timestamp() == epoch)
   assert_true("now/epoch_time", 
     CBOR.create_epoch_time(instant, millis).get_epoch_time().timestamp() == epoch)
 
 # Roundtripping...
-now = datetime.datetime.now().timestamp()
-millis = int(now * 1000 + 0.5) / 1000
-seconds = int(now + 0.5)
+now = datetime.now()
+epoch = now.timestamp()
+millis = int(epoch * 1000 + 0.5) / 1000
+seconds = int(epoch + 0.5)
 
 one_create_date_time(millis, True, False)
 one_create_date_time(millis, True, True)
