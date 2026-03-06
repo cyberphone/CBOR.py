@@ -1,6 +1,6 @@
 ################################################################
 #                                                              #
-#               Python3.9+ API for CBOR::Core                  #
+#               Python3.12+ API for CBOR::Core                 #
 #                                                              #
 # Author: Anders Rundgren (anders.rundgren.net@gmail.com)      #
 # Repository: https://github.com/cyberphone/CBOR.py#main       #

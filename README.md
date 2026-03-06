@@ -107,6 +107,10 @@ a201fb4046d9999999999a0269486920746865726521
 Aided by the model used for deterministic encoding, diagnostic notation becomes _bidirectional,_
 while remaining faithful to the native CBOR representation.
 
+### Release Information
+
+The API has been verified to work with Python 3.14.2 on Windows and Mac, and with Python 3.12.3 on Ubuntu.
+
 ### Other Compatible Implementations
 
 |Language|URL|
@@ -116,36 +120,4 @@ while remaining faithful to the native CBOR representation.
 |JavaScript|https://github.com/cyberphone/CBOR.js#main|
 
 Updated: 2026-03-02
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
