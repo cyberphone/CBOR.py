@@ -1,6 +1,6 @@
 ################################################################
 #                                                              #
-#                 CBOR::Core API for Python3                   #
+#               Python3.9+ API for CBOR::Core                  #
 #                                                              #
 # Author: Anders Rundgren (anders.rundgren.net@gmail.com)      #
 # Repository: https://github.com/cyberphone/CBOR.py#main       #
@@ -896,11 +896,13 @@ class CBOR:
                 case CBOR.Tag.__TAG_BIG_POS | CBOR.Tag.__TAG_BIG_NEG:
                     CBOR._error("Tag number reserved for 'bigint'")
                 case CBOR.Tag.TAG_DATE_TIME:
-                    # Note: clone() because we have mot read it really.
-                    self._date_time = object.clone().get_date_time()
+                    self._date_time = object.get_date_time()
+                    # We have mot read it...really.
+                    object._read_flag = False
                 case CBOR.Tag.TAG_EPOCH_TIME:
-                    # Note: clone() because we have mot read it really.
-                    self._epoch_time = object.clone().get_epoch_time()
+                    self._epoch_time = object.get_epoch_time()
+                    # We have mot read it...really.
+                    object._read_flag = False
                 case CBOR.Tag.TAG_COTX:
                     if isinstance(object, CBOR.Array) and object.length == 2:
                         array = object._objects
