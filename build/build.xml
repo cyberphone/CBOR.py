@@ -17,7 +17,7 @@
   </target>
 
   <target name="doc">
-    <property file="dn-table.xml"/>
+    <property file="../../CBOR.js/build/dn-table.xml"/>
     <delete dir="${temp.dir}"/>
     <mkdir dir="${temp.dir}"/>
     <javac debug="${debug}"
