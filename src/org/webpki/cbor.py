@@ -1614,7 +1614,7 @@ class CBOR:
 
         def to_readable_char(self, c):
             char_code = ord(c[0])
-            return ("\\u00{:2x}".format(char_code) 
+            return ("\\u00{:02x}".format(char_code) 
                     if char_code < 0x20 else ("'" + c + "'"))
 
         def scan_for(self, expected):
@@ -1676,7 +1676,7 @@ class CBOR:
                                                 int(self.read_char(), 16))
                                     if low < 0xdc00:
                                         self.parser_error(
-                "Invalid UTF-16 surrogate pair: {:4X} {:4X}".format(u16, low))
+                "Invalid UTF-16 surrogate pair: {:04X} {:04X}".format(u16, low))
                                     c = (CBOR._encode_16_bits(u16) + 
                                          CBOR._encode_16_bits(low)).decode(
                                              "utf-16-be")
