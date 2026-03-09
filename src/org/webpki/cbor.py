@@ -1405,7 +1405,8 @@ class CBOR:
                 i = message.find("Error('")
                 if i >= 0:
                     message = message[i + 7:len(message) - 2]
-                raise CBOR.Exception(self.build_error(message)) from None
+                raise CBOR.Exception(self.build_error(
+                    message.replace("\\\\", "\\"))) from None
 
         def get_object(self):
             self.scan_non_signficant_data()
