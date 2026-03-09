@@ -190,7 +190,7 @@ class CBOR:
                 instant = datetime.fromisoformat(iso)
                 CBOR._check_time_range(datetime.timestamp(instant))
                 return instant
-            CBOR._error("Invalid ISO format: \"{:s}\"".format(iso))
+            CBOR._error(f"Invalid ISO format: \"{iso:s}\"")
 
         def get_epoch_time(self):
             return datetime.fromtimestamp(CBOR._check_time_range(
@@ -549,7 +549,7 @@ class CBOR:
                     if escaped_character:
                         cbor_printer.append('\\')
                         if escaped_character == 1:
-                            cbor_printer.append("u00{:02x}".format(c))
+                            cbor_printer.append(f"u00{c:02x}")
                         else:
                             cbor_printer.append(chr(escaped_character))
                         continue
@@ -1171,7 +1171,7 @@ class CBOR:
             return byte_string
 
         def _unsupported_tag(self, tag):
-            CBOR._error("Unsupported tag: 0x{:02x}".format(tag))
+            CBOR._error(f"Unsupported tag: 0x{tag:02x}")
 
         def _print_float_det_err(self, decoded):
             CBOR._error(
@@ -1257,7 +1257,7 @@ class CBOR:
                 """
                 if self._strict_numbers and (n < 24 or not (mask & n)):
                     CBOR._error("Non-deterministically encoded primitive. " +
-                                "Initial byte: 0x{:02x}".format(tag))
+                                f"Initial byte: 0x{tag:02x}")
             """
             N successfully decoded, now switch on major type
             (upper three bits).
@@ -1615,7 +1615,7 @@ class CBOR:
 
         def to_readable_char(self, c):
             char_code = ord(c[0])
-            return ("\\u00{:02x}".format(char_code) 
+            return (f"\\u00{char_code:02x}"
                     if char_code < 0x20 else ("'" + c + "'"))
 
         def scan_for(self, expected):
@@ -1677,7 +1677,7 @@ class CBOR:
                                                 int(self.read_char(), 16))
                                     if low < 0xdc00:
                                         self.parser_error(
-                "Invalid UTF-16 surrogate pair: {:04X} {:04X}".format(u16, low))
+                f"Invalid UTF-16 surrogate pair: {u16:04X} {low:04X}")
                                     c = (CBOR._encode_16_bits(u16) + 
                                          CBOR._encode_16_bits(low)).decode(
                                              "utf-16-be")
