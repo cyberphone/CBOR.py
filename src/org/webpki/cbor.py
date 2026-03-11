@@ -184,7 +184,7 @@ class CBOR:
             iso = self.get_string()
             # Fails on https://www.rfc-editor.org/rfc/rfc3339.html#section-5.8
             # Leap second 1990-12-31T15:59:60-08:00
-            match = re.search(r"^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})" +
+            match = re.search(r"^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})"
                               r"(\.\d{1,9})?((\-|\+)\d{2}:\d{2}|Z)$", iso)
             if match:
                 instant = datetime.fromisoformat(iso)
@@ -1744,14 +1744,14 @@ class CBOR:
                     case '/':
                         self.read_char()
                         while (self.read_char() != '/'):
-                            """ No-Op """
+                            pass # No-op
                         continue
 
                     case '#':
                         self.read_char()
                         while (self.index < len(self.cbor_text) and
                                     self.read_char() != '\n'):
-                            """ No-Op """
+                            pass # No-op
                         continue
 
                     case _:
