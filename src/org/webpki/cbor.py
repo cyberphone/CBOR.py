@@ -505,12 +505,12 @@ class CBOR:
             return nf
 
         @staticmethod
-        def create_float32(value):
-            return CBOR._return_converted(False, value)
+        def create_float32(value, exact):
+            return CBOR._return_converted(False, value, exact)
 
         @staticmethod
-        def create_float16(value):
-            return CBOR._return_converted(True, value)
+        def create_float16(value, exact):
+            return CBOR._return_converted(True, value, exact)
 
         def _internal_encode(self):
             return bytes([0xf9 + (len(self._encoded) >> 2)]) + self._encoded
@@ -1930,17 +1930,19 @@ class CBOR:
                 CBOR._encode_string(CBOR._MT_BYTES, array))
 
     @staticmethod
-    def _return_converted(float16_flag, value):
+    def _return_converted(float16_flag, value, exact):
+        CBOR._check_argument_type(exact, 'bool')
         if math.isfinite(CBOR._check_argument_type(value, 'float')):
+            type = "float16" if float16_flag else "float32"
             try:
                 reduced = struct.unpack("!f", struct.pack("!f", value))[0]
                 if float16_flag:
                     reduced = struct.unpack(
                         "!e", struct.pack("!e", reduced))[0]
-            except OverflowError:
-                CBOR._error(
-                    "Not possible reducing {:g} into a \"{:s}\"".format(
-                        value, "float16" if float16_flag else "float32"))
+            except OverflowError: CBOR._error(
+                f"Not possible reducing {value:g} into a \"{type}\"")
+            if exact and reduced != value: CBOR._error(
+                f"{value:g} cannot be exactly represented by \"{type}\"")
         else: reduced = value
         return CBOR.Float(reduced)
 
