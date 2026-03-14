@@ -173,8 +173,8 @@ class CBOR:
                     case 0x7e00: return math.nan
                     case 0x7c00: return math.inf
                     case 0xfc00: return -math.inf
-                CBOR._error('get_extended_float64() only supports ' +
-                            'simple" NaN (7e00)')
+                CBOR._error(
+                    'get_extended_float64() only supports "simple" NaN (7e00)')
             return self.get_float64()
         
         def get_string(self):
