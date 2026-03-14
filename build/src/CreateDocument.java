@@ -716,7 +716,7 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       object holding seconds will be created.</div>
       <div style='margin-top:0.5em'>Sample code:</div>
       <div style='margin:0.3em 0 0 1.2em'>
-      <code>import datetime<br><br>epoch = CBOR.create_epoch_time(datetime.datetime.now(), False)<br>
+      <code>from datetime import datetime<br><br>epoch = CBOR.create_epoch_time(datetime.now(), False)<br>
       print(epoch.to_string())&nbsp;&nbsp;# Diagnostic notation<br>
       <span style='color:#007fdd'>1764939916</span></code></div>
       <div style='margin-top:0.5em'>
@@ -763,9 +763,9 @@ CBOR.NonFinite.create_payload()</a>.</div>""";
       milliseconds (<code>.nnn</code>) as well.</div>
       <div style='margin-top:0.5em'>Sample code:</div>
       <div style='margin:0.3em 0 0 1.2em'>
-      <code>import datetime<br><br>
+      <code>from datetime import datetime<br><br>
       date_time = CBOR.create_date_time(<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;datetime.datetime.now(), True, False)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;datetime.now(), True, False)<br>
       print(date_time.to_string())&nbsp;&nbsp;# Diagnostic notation<br>
       <span style='color:#007fdd'>"2026-02-05T13:55:42.418+01:00"</span></code></div>
       <div style='margin-top:0.5em'>

@@ -370,7 +370,7 @@ def reducedOneTurn(length, value, result, exact):
   #    console.log("EHi=" + result + " r=" + reduced + " v=" + value)
   #    console.log(error.to_string())
     assert_false("should" + repr(e), ok)
-    check_exception(e, "Not possible converting" if math.isfinite(value) else "NaN/")
+    check_exception(e, "out of range for " if math.isfinite(value) else "NaN/")
 
 reducedOneTurn(None, math.nan,               0,                      False)
 reducedOneTurn(2,    60000,                  60000,                  True)

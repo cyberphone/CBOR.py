@@ -1402,7 +1402,7 @@ class CBOR:
                 return sequence
             except Exception as e:
                 message = repr(e)
-                i = message.find("Error('")
+                i = message.find("Error(")
                 if i >= 0:
                     message = message[i + 7:len(message) - 2]
                 raise CBOR.Exception(self.build_error(
@@ -1489,10 +1489,8 @@ class CBOR:
                         return CBOR.Boolean(False)
                     self.scan_for('loat')
                     float_bytes = self.get_bytes(False).get_bytes()
-                    if len(float_bytes) not in [2, 4, 8]:
-                        self.parser_error(
-                            "Argument must be a 16, 32, or 64-bit " +
-                            "floating-point number")
+                    if len(float_bytes) not in [2, 4, 8]: self.parser_error(
+                "Argument must be a 16, 32, or 64-bit floating-point number")
                     return CBOR.init_decoder(
                         io.BytesIO(bytes(
                             [0xf9 + (len(float_bytes) >> 2)]) + float_bytes),
@@ -1572,9 +1570,8 @@ class CBOR:
                             floating_point = True
                     
                     case '_':
-                        if prefix is None:
-                            self.parser_error("'_' is only permitted for " +
-                                              "0b, 0o, and 0x numbers")
+                        if prefix is None: self.parser_error(
+                            "'_' is only permitted for 0b, 0o, and 0x numbers")
                         self.read_char()
 
             if floating_point:
@@ -1604,8 +1601,8 @@ class CBOR:
 
         def test_for_non_decimal(self, non_decimal):
             if non_decimal:
-                self.parser_error("0b, 0o, and 0x prefixes " +
-                                  "are only permited for integers")
+                self.parser_error(
+                    "0b, 0o, and 0x prefixes are only permited for integers")
 
         def next_char(self):
             if self.index == len(self.cbor_text): return chr(0)
@@ -1616,15 +1613,14 @@ class CBOR:
         def to_readable_char(self, c):
             char_code = ord(c[0])
             return (f"\\u00{char_code:02x}"
-                    if char_code < 0x20 else ("'" + c + "'"))
+                    if char_code < 0x20 else (f"'{c}'"))
 
         def scan_for(self, expected):
             for i in range(len(expected)):
                 c = expected[i]
                 actual = self.read_char()
-                if c != actual:
-                    self.parser_error("Expected: '" + c + "' actual: " + 
-                                      self.to_readable_char(actual))
+                if c != actual: self.parser_error(
+                    f"Expected: '{c}' actual: {self.to_readable_char(actual)}")
 
         def get_string(self, byte_string):
             s = ''
@@ -1675,8 +1671,7 @@ class CBOR:
                                     for i in range(4):
                                         low = ((low << 4) + 
                                                 int(self.read_char(), 16))
-                                    if low < 0xdc00:
-                                        self.parser_error(
+                                    if low < 0xdc00: self.parser_error(
                 f"Invalid UTF-16 surrogate pair: {u16:04X} {low:04X}")
                                     c = (CBOR._encode_16_bits(u16) + 
                                          CBOR._encode_16_bits(low)).decode(
@@ -1686,8 +1681,7 @@ class CBOR:
                     
                             case _:
                                 self.parser_error(
-                                    "Invalid escape character " + 
-                                    self.to_readable_char(c))
+                f"Invalid escape character {self.to_readable_char(c)}")
                     
                     case '"':
                         if not byte_string:
@@ -1699,10 +1693,8 @@ class CBOR:
                             return CBOR.Bytes(s.encode())
                     
                     case _:
-                        if ord(c[0]) < 0x20:
-                            self.parser_error(
-                                "Unexpected control character: " + 
-                                self.to_readable_char(c))
+                        if ord(c[0]) < 0x20: self.parser_error(
+                f"Unexpected control character: {self.to_readable_char(c)}")
 
                 s += c
     
@@ -1859,9 +1851,7 @@ class CBOR:
                     return True
                 """ Where we are standing at the moment. """
                 if (len(self.buffer) - self.start_of_line +
-                    array.length +
-                    2 +
-                    len(array.to_diagnostic(False))) > 70:
+                    array.length + 2 + len(array.to_diagnostic(False))) > 70:
                     return True
             return False
 
@@ -1940,7 +1930,7 @@ class CBOR:
                     converted = struct.unpack(
                         "!e", struct.pack("!e", converted))[0]
             except OverflowError: CBOR._error(
-                f"Not possible converting {value:g} into \"{type}\"")
+                f"{value:g} out of range for \"{type}\"")
             if exact and converted != value: CBOR._error(
                 f"{value:g} cannot be exactly represented by \"{type}\"")
         else: converted = value
@@ -1979,8 +1969,8 @@ class CBOR:
     @staticmethod
     def _check_bytes_argument(byte_string):  
         if type(byte_string).__name__ not in ['bytes', 'bytearray']:
-            CBOR._error("Expected 'bytes' or 'bytearray' argument, got '" +
-                        type(byte_string).__name__ + "'")
+            CBOR._error("Expected 'bytes' or 'bytearray' argument, "
+                        f"got '{type(byte_string).__name__}'")
         return byte_string
     
     @staticmethod
