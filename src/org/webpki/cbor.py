@@ -1513,7 +1513,7 @@ class CBOR:
                     return self.get_number_or_tag(True)
 
                 case '0' | '1' | '2' | '3' | '4' |\
-                    '5' | '6' | '7' | '8' | '9':
+                     '5' | '6' | '7' | '8' | '9':
                     return self.get_number_or_tag(False)
 
                 case 'N':
@@ -1527,8 +1527,7 @@ class CBOR:
                 case _:
                     self.index -= 1
                     self.parser_error(
-                        "Unexpected character: " + 
-                        self.to_readable_char(self.read_char()))
+            f"Unexpected character: {self.to_readable_char(self.read_char())}")
 
         def simple_type(self):
             token = ''
