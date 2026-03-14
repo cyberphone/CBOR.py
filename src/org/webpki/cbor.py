@@ -84,11 +84,12 @@ class CBOR:
         
         @property
         def length(self):
-            if not hasattr(self, "_length"):
-                CBOR._error("'CBOR." + type(self).__name__  +
-                            "' does not support len()")
             return self._length()
-        
+
+        # Overridden by supporting objects.
+        def _length(self):
+            CBOR._error(f"CBOR.{type(self).__name__} does not support len()")
+
         def __len__(self):
             return self.length
         
@@ -97,9 +98,8 @@ class CBOR:
                 CBOR._error('Map keys are immutable') 
 
         def _check_type_get_value(self, expected):
-            if type(self).__name__ != expected:
-                CBOR._error("Expected '" + 'CBOR.' + expected +
-                            "', got 'CBOR." + type(self).__name__  + "'")
+            if type(self).__name__ != expected: CBOR._error(
+                f"Expected CBOR.{expected}, got CBOR.{type(self).__name__}")
             self._read_flag = True
             return self._get()
 
@@ -265,9 +265,9 @@ class CBOR:
             else:
                 self._read_flag = True
 
-  
+        # Overridden by supporting objects.  
         def get(self):
-            CBOR._error('get() not available in: CBOR.' + type(self).__name__)
+            CBOR._error(f"get() not available in: CBOR.{type(self).__name__}")
 
         def to_diagnostic(self, pretty_print):
             cbor_printer = CBOR._CborPrinter(
@@ -1935,16 +1935,16 @@ class CBOR:
         if math.isfinite(CBOR._check_argument_type(value, 'float')):
             type = "float16" if float16_flag else "float32"
             try:
-                reduced = struct.unpack("!f", struct.pack("!f", value))[0]
+                converted = struct.unpack("!f", struct.pack("!f", value))[0]
                 if float16_flag:
-                    reduced = struct.unpack(
-                        "!e", struct.pack("!e", reduced))[0]
+                    converted = struct.unpack(
+                        "!e", struct.pack("!e", converted))[0]
             except OverflowError: CBOR._error(
-                f"Not possible reducing {value:g} into a \"{type}\"")
-            if exact and reduced != value: CBOR._error(
+                f"Not possible converting {value:g} into \"{type}\"")
+            if exact and converted != value: CBOR._error(
                 f"{value:g} cannot be exactly represented by \"{type}\"")
-        else: reduced = value
-        return CBOR.Float(reduced)
+        else: converted = value
+        return CBOR.Float(converted)
 
     @staticmethod
     def _int_range_check(value, min, max):
@@ -1960,13 +1960,12 @@ class CBOR:
 
     @staticmethod
     def _range_error(type, value_string):
-        CBOR._error('Value out of range for "' + type + '": ' + value_string)
+        CBOR._error(f"Value out of range for \"{type}\": {value_string}")
 
     @staticmethod
     def _check_argument_type(value, expected):
-        if type(value).__name__ != expected:
-            CBOR._error("Expected '" + expected +
-                        "', got '" + type(value).__name__ + "'")
+        if type(value).__name__ != expected: CBOR._error(
+            f"Expected '{expected}', got '{type(value).__name__}'")
         return value
         
     @staticmethod
@@ -1988,8 +1987,7 @@ class CBOR:
     def _cbor_argument_check(object):
         if isinstance(object, CBOR._CborObject):
             return object
-        CBOR._error("Expected CBOR.* argument, got '" + 
-                    type(object).__name__ + "'")
+        CBOR._error(f"Expected CBOR.* argument, got '{type(object).__name__}'")
     
     @staticmethod
     def _encode_16_bits(uint16):
@@ -2060,7 +2058,7 @@ class CBOR:
     def _check_time_range(timestamp):
         if ((isinstance(timestamp, float) and not math.isfinite(timestamp)) or
             timestamp < 0 or timestamp > 253402300799):
-                CBOR._error("Timestamp out of range: " + str(timestamp))
+                CBOR._error(f"Timestamp out of range: {str(timestamp)}")
         return timestamp
     
     @staticmethod

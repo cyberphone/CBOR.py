@@ -370,7 +370,7 @@ def reducedOneTurn(length, value, result, exact):
   #    console.log("EHi=" + result + " r=" + reduced + " v=" + value)
   #    console.log(error.to_string())
     assert_false("should" + repr(e), ok)
-    check_exception(e, "Not possible reducing" if math.isfinite(value) else "NaN/")
+    check_exception(e, "Not possible converting" if math.isfinite(value) else "NaN/")
 
 reducedOneTurn(None, math.nan,               0,                      False)
 reducedOneTurn(2,    60000,                  60000,                  True)
@@ -393,6 +393,12 @@ reducedOneTurn(4,    1.401298464324817e-45,  1.401298464324817e-45,  True)
 reducedOneTurn(4,    3.4028234663852886e+38, 3.4028234663852886e+38, True)
 reducedOneTurn(4,    3.4028235e+38,          3.4028234663852886e+38, False)
 reducedOneTurn(None, 3.40282358e+38,         3.4028234663852886e+38, False)
+
+try:
+  CBOR.Int(6).get_float64()
+  fail("should not")
+except Exception as e:
+  check_exception(e, "Expected CBOR.Float, got CBOR.Int")
 
 success()
 """],
