@@ -1025,7 +1025,7 @@ nest(2, 3, False)
 
 success()
 """],
-['base64.py',
+['base64url.py',
 """
 # Testing the B64U/B64 converters
 
