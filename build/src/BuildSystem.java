@@ -50,7 +50,7 @@ public class BuildSystem {
     addFile("miscellaneous.py");
     addFile("exceptions.py");
     addFile("nesting.py");
-    addFile("base64url.py");
+    addFile("base64.py");
     addFile("xyz-encoder.py");
     addFile("xyz-decoder.py");
     IO.writeFile(testFileName, template);
