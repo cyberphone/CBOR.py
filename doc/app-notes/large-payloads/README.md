@@ -41,7 +41,7 @@ digest = hashes.Hash(hashes.SHA256())
 
 # Perform an HTTP request.
 conn = http.client.HTTPSConnection("cyberphone.github.io")
-conn.request("GET", "/CBOR.py/doc/app-notes/large-payloads/payload.bin")
+conn.request("GET", "/cbor-core/large-payload/payload.bin")
 response = conn.getresponse()
 
 # Show the response status.
