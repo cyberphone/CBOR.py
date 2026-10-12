@@ -884,6 +884,11 @@ cbor = CBOR.Tag(0xf0123456789abcde, object).encode()
 assert_true("t14", CBOR.decode(cbor).get_tag_number()== 0xf0123456789abcde)
 assert_true("t5", cbor.hex() == 
     "dbf0123456789abcde82781c68747470733a2f2f6578616d706c652e636f6d2f6d796f626a65637406")
+tag_clone = tag.clone()
+assert_true("t6", tag_clone.equals(tag))
+tag_clone.get().update(1, CBOR.String("hi"))
+assert_true("t7", tag_clone.cotx_object.equals(CBOR.String("hi")))
+assert_false("t8", tag_clone.equals(tag))
 
 for tag_number in [-1, 0x10000000000000000]:
   try:

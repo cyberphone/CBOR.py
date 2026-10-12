@@ -908,7 +908,7 @@ class CBOR:
                         array = object._objects
                         if isinstance(array[0], CBOR.String):
                             self._cotx_id = array[0].get_string()
-                            self._cotx_object = array[1]
+                            self._cotx_object = array
                             return
                     self._error_in_object(CBOR.Tag.__ERR_COTX)
 
@@ -970,7 +970,7 @@ class CBOR:
         @property
         def cotx_object(self):
             self._check_cotx()
-            return self._mark_as_read(self._cotx_object)
+            return self._mark_as_read(self._cotx_object[1])
 
     ##########################
     #      CBOR.Simple       #
