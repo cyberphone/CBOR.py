@@ -1245,7 +1245,7 @@ class CBOR:
                 For 1, 2, 4, and 8 byte N.
                 """
                 q = 1 << (n - 24)
-                mask = 0xffffffff << ((q >> 1) * 8)
+                mask = 0xffffffff << (q * 4)
                 n = 0
                 while (q := q - 1) >= 0:
                     n <<= 8
