@@ -106,51 +106,41 @@ class CBOR:
         def get_bigint(self):
             return self._check_type_get_value('Int')
         
-        def _get_checked_int(self, min, max):
-            return CBOR._int_range_check(self.get_bigint(), min, max)
+        def _get_checked_int(self, limit):
+            return CBOR._int_range_check(self.get_bigint(), limit)
 
         def get_int8(self):
-            return self._get_checked_int(-0x80, 
-                                         0x7f)
+            return self._get_checked_int(-0x80)
 
         def get_uint8(self):
-            return self._get_checked_int(0, 
-                                         0xff)
+            return self._get_checked_int(0xff)
 
         def get_int16(self):
-            return self._get_checked_int(-0x8000, 
-                                         0x7fff)
+            return self._get_checked_int(-0x8000)
 
         def get_uint16(self):
-            return self._get_checked_int(0, 
-                                         0xffff)
+            return self._get_checked_int(0xffff)
 
         def get_int32(self):
-            return self._get_checked_int(-0x80000000, 
-                                         0x7fffffff)
+            return self._get_checked_int(-0x80000000)
 
         def get_uint32(self):
-            return self._get_checked_int(0, 0xffffffff)
+            return self._get_checked_int(0xffffffff)
 
         def get_int53(self):
-            return self._get_checked_int(-9007199254740991, 
-                                         9007199254740991)
+            return self._get_checked_int(0)
 
         def get_int64(self):
-            return self._get_checked_int(-0x8000000000000000,
-                                         0x7fffffffffffffff)
+            return self._get_checked_int(-0x8000000000000000)
 
         def get_uint64(self):
-            return self._get_checked_int(0, 
-                                         0xffffffffffffffff)
+            return self._get_checked_int(0xffffffffffffffff)
 
         def get_int128(self):
-            return self._get_checked_int(-0x80000000000000000000000000000000,
-                                         0x7fffffffffffffffffffffffffffffff)
+            return self._get_checked_int(-0x80000000000000000000000000000000)
 
         def get_uint128(self):
-            return self._get_checked_int(0, 
-                                         0xffffffffffffffffffffffffffffffff)
+            return self._get_checked_int(0xffffffffffffffffffffffffffffffff)
         
         def _range_float(self, max):
             value = self.get_float64()
@@ -293,69 +283,47 @@ class CBOR:
 
         @staticmethod
         def create_int8(value):
-            return CBOR._create_int(value, 
-                                    -0x80, 
-                                    0x7f)
+            return CBOR._create_int(value, -0x80)
 
         @staticmethod
         def create_uint8(value):
-            return CBOR._create_int(value, 
-                                    0, 
-                                    0xff)
+            return CBOR._create_int(value, 0xff)
 
         @staticmethod
         def create_int16(value):
-            return CBOR._create_int(value,
-                                    -0x8000, 
-                                    0x7fff)
+            return CBOR._create_int(value, -0x8000)
 
         @staticmethod
         def create_uint16(value):
-            return CBOR._create_int(value, 
-                                    0, 
-                                    0xffff)
+            return CBOR._create_int(value, 0xffff)
 
         @staticmethod
         def create_int32(value):
-            return CBOR._create_int(value,
-                                    -0x80000000, 
-                                    0x7fffffff)
+            return CBOR._create_int(value, -0x80000000)
 
         @staticmethod
         def create_uint32(value):
-            return CBOR._create_int(value, 
-                                    0, 
-                                    0xffffffff)
+            return CBOR._create_int(value, 0xffffffff)
 
         @staticmethod
         def create_int53(value):
-            return CBOR._create_int(value, 
-                                    -9007199254740991, 
-                                    9007199254740991)
+            return CBOR._create_int(value, 0)
 
         @staticmethod
         def create_int64(value):
-            return CBOR._create_int(value, 
-                                    -0x8000000000000000,
-                                    0x7fffffffffffffff)
+            return CBOR._create_int(value, -0x8000000000000000)
 
         @staticmethod
         def create_uint64(value):
-            return CBOR._create_int(value, 
-                                    0,
-                                    0xffffffffffffffff)
+            return CBOR._create_int(value, 0xffffffffffffffff)
             
         @staticmethod
         def create_int128(value):
-            return CBOR._create_int(value, 
-                                    -0x80000000000000000000000000000000,
-                                    0x7fffffffffffffffffffffffffffffff)
+            return CBOR._create_int(value, -0x80000000000000000000000000000000)
 
         @staticmethod
         def create_uint128(value):
-            return CBOR._create_int(value,
-                                    0, 
-                                    0xffffffffffffffffffffffffffffffff)
+            return CBOR._create_int(value, 0xffffffffffffffffffffffffffffffff)
 
         def _internal_encode(self):
             tag = CBOR._MT_UNSIGNED
@@ -1936,14 +1904,22 @@ class CBOR:
         return CBOR.Float(converted)
 
     @staticmethod
-    def _int_range_check(value, min, max):
-        if value < min or value > max:
-            if min < 0 and max != 9007199254740991: max += 1
+    def _int_range_check(value, limit):
+        if limit < 0:
+            upper = ~limit
+        elif (limit):
+            upper = limit
+            limit = 0
+        else:
+            limit = -9007199254740991
+            upper = 9007199254740991
+        if value < limit or value > upper:
+            if limit < 0 and upper != 9007199254740991: upper += 1
             bits = 0
-            while max:
-                max >>= 1
+            while upper:
+                upper >>= 1
                 bits += 1
-            CBOR._range_error(("int" if min else "uint") + str(bits),
+            CBOR._range_error(("int" if limit else "uint") + str(bits),
                               str(value))
         return value
 
@@ -1995,10 +1971,10 @@ class CBOR:
         return reversed << (52 - bit_count)
     
     @staticmethod
-    def _create_int(value, min, max):
+    def _create_int(value, limit):
         value = CBOR._check_int_argument(value)
         cbor_int = CBOR.Int(value)
-        CBOR._int_range_check(value, min, max)
+        CBOR._int_range_check(value, limit)
         return cbor_int
 
     @staticmethod
